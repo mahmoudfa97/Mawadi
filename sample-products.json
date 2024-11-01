@@ -1,0 +1,143 @@
+{
+  "products": [
+    {
+      "_id": "5f9d88b3e21c2137a4c2c111",
+      "name": "Luxury Perfume Set",
+      "description": "A set of 3 exquisite fragrances for any occasion.",
+      "category": "5f9d88b3e21c2137a4c2c001",
+      "subCategory": "5f9d88b3e21c2137a4c2c002",
+      "brand": "Essence of Elegance",
+      "reviews": [],
+      "relatedProducts": ["5f9d88b3e21c2137a4c2c112", "5f9d88b3e21c2137a4c2c113"],
+      "occasions": ["5f9d88b3e21c2137a4c2c003", "5f9d88b3e21c2137a4c2c004"],
+      "basePrice": 129.99,
+      "variants": [
+        {
+          "_id": 1,
+          "name": "Classic Collection",
+          "price": 129.99,
+          "stock": 50,
+          "sku": "PERF-001-CLA"
+        },
+        {
+          "_id": 2,
+          "name": "Limited Edition",
+          "price": 159.99,
+          "stock": 25,
+          "sku": "PERF-001-LTD"
+        }
+      ],
+      "images": [
+        "https://mawada-gifts.public.blob.vercel-storage.com/perfume-set-1.jpg",
+        "https://mawada-gifts.public.blob.vercel-storage.com/perfume-set-2.jpg"
+      ],
+      "tags": ["luxury", "fragrance", "gift set"],
+      "averageRating": 4.7,
+      "numberOfReviews": 28,
+      "isCustomizable": false,
+      "dimensions": {
+        "length": 25,
+        "width": 20,
+        "height": 10,
+        "unit": "cm"
+      },
+      "weight": {
+        "value": 0.8,
+        "unit": "kg"
+      },
+      "isActive": true,
+      "createdAt": "2023-10-01T10:00:00.000Z",
+      "updatedAt": "2023-10-01T10:00:00.000Z"
+    },
+    {
+      "_id": "5f9d88b3e21c2137a4c2c112",
+      "name": "Gourmet Chocolate Hamper",
+      "description": "A luxurious assortment of fine chocolates from around the world.",
+      "category": "5f9d88b3e21c2137a4c2c005",
+      "subCategory": "5f9d88b3e21c2137a4c2c006",
+      "brand": "Choco Delights",
+      "reviews": [],
+      "relatedProducts": ["5f9d88b3e21c2137a4c2c111", "5f9d88b3e21c2137a4c2c114"],
+      "occasions": ["5f9d88b3e21c2137a4c2c007", "5f9d88b3e21c2137a4c2c008"],
+      "basePrice": 79.99,
+      "variants": [
+        {
+          "_id": 1,
+          "name": "Standard Assortment",
+          "price": 79.99,
+          "stock": 100,
+          "sku": "CHOC-001-STD"
+        },
+        {
+          "_id": 2,
+          "name": "Deluxe Assortment",
+          "price": 99.99,
+          "stock": 50,
+          "sku": "CHOC-001-DLX"
+        }
+      ],
+      "images": [
+        "https://mawada-gifts.public.blob.vercel-storage.com/chocolate-hamper-1.jpg",
+        "https://mawada-gifts.public.blob.vercel-storage.com/chocolate-hamper-2.jpg"
+      ],
+      "tags": ["gourmet", "chocolate", "hamper"],
+      "averageRating": 4.9,
+      "numberOfReviews": 42,
+      "isCustomizable": true,
+      "customizationOptions": ["Add personalized message", "Gift wrapping"],
+      "dimensions": {
+        "length": 30,
+        "width": 25,
+        "height": 15,
+        "unit": "cm"
+      },
+      "weight": {
+        "value": 1.2,
+        "unit": "kg"
+      },
+      "isActive": true,
+      "createdAt": "2023-10-02T11:00:00.000Z",
+      "updatedAt": "2023-10-02T11:00:00.000Z"
+    },
+    {
+      "_id": "5f9d88b3e21c2137a4c2c113",
+      "name": "Spa Day Experience",
+      "description": "A relaxing day at a luxury spa with various treatments.",
+      "category": "5f9d88b3e21c2137a4c2c009",
+      "subCategory": "5f9d88b3e21c2137a4c2c010",
+      "brand": "Serenity Spa",
+      "reviews": [],
+      "relatedProducts": ["5f9d88b3e21c2137a4c2c111", "5f9d88b3e21c2137a4c2c115"],
+      "occasions": ["5f9d88b3e21c2137a4c2c011", "5f9d88b3e21c2137a4c2c012"],
+      "basePrice": 199.99,
+      "variants": [
+        {
+          "_id": 1,
+          "name": "Half Day Package",
+          "price": 199.99,
+          "stock": 30,
+          "sku": "SPA-001-HLF"
+        },
+        {
+          "_id": 2,
+          "name": "Full Day Package",
+          "price": 299.99,
+          "stock": 20,
+          "sku": "SPA-001-FUL"
+        }
+      ],
+      "images": [
+        "https://mawada-gifts.public.blob.vercel-storage.com/spa-experience-1.jpg",
+        "https://mawada-gifts.public.blob.vercel-storage.com/spa-experience-2.jpg"
+      ],
+      "tags": ["spa", "relaxation", "experience"],
+      "averageRating": 4.8,
+      "numberOfReviews": 35,
+      "isCustomizable": true,
+      "customizationOptions": ["Choose treatments", "Add champagne"],
+      "isActive": true,
+      "createdAt": "2023-10-03T12:00:00.000Z",
+      "updatedAt": "2023-10-03T12:00:00.000Z"
+    }
+  ]
+}

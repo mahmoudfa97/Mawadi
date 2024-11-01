@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",        // Set this to "commonjs" to support Node.js
+    "esModuleInterop": true,     // Ensures compatibility between CommonJS and ES Modules
+    "resolveJsonModule": true,
+    "target": "ES2020",          // Target modern JavaScript
+    "moduleResolution": "node",  // Resolves modules similar to Node.js
+    "outDir": "./dist",          // Output directory after compiling
+    "rootDir": "./src",          // Source code directory
+    "skipLibCheck": true,
+    "strict": true,              // Enable strict type-checking options
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "typeRoots": ["./node_modules/@types", "./types"]
+  },
+  
+  "include": ["src/**/*", "src/types/express/express.d.ts"],    // Include all TypeScript files in src folder
+  "exclude": ["node_modules"]     // Exclude node_modules
+}

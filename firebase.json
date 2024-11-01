@@ -1,0 +1,23 @@
+{
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "project_id": "mawadi-ec01d",
+  "private_key": "AIzaSyAEBnzrhKzo61wNwJmi3NHJk7pzbldF2ng",
+  "authDomain": "mawadi-ec01d.firebaseapp.com",
+  "databaseURL": "https://mawadi-ec01d-default-rtdb.firebaseio.com",
+  "projectId": "mawadi-ec01d",
+  "storageBucket": "mawadi-ec01d.appspot.com",
+  "client_email":"leedor97@gmail.com",
+  "messagingSenderId": "554330973324",
+  "appId": "1:554330973324:web:3a8588f6a4317e93f647a9",
+  "measurementId": "G-45W2150E4S"
+}

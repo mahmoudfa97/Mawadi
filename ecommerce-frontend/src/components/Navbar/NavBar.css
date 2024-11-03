@@ -1,0 +1,12 @@
+.headerContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.rightHeader{
+    display: flex;
+    justify-content: flex-start;
+}
+.LogoContainer{
+    width: 64px;
+    height: 64px;
+}

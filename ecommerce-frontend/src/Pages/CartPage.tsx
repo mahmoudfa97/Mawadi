@@ -1,10 +1,10 @@
 import React from "react";
 import {  Minus, Plus } from "lucide-react";
 import { removeFromCart, incrementQuantity, decrementQuantity, updatePersonalization } from "../store/cartSlice";
-import { CartItem } from "../components/Constants/Constants";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import CartHeader from "./cart/header";
+import { CartItem } from "../types/Constants";
 
 const CartPage: React.FC = () => {
   const cartItems = useAppSelector((state) => state.cart.items);

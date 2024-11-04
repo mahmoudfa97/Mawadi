@@ -1,23 +1,10 @@
 // UserActions.js
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import ProductCard from "../ProductCard/ProductCard";
-import { IProduct } from "../Constants/Constants";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { getSpecialProducts } from "../../store/productsSlice";
 interface BreadcrumbProps {
     selectedPage: string
 }
 const Breadcrumb = (props: BreadcrumbProps) => {
-  const { specialProducts, loading, error } = useAppSelector((state) => state.products);
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getSpecialProducts());
-  }, [dispatch]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
 

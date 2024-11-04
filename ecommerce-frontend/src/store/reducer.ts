@@ -1,3 +1,4 @@
+import { CheckoutState } from '../types/Constants';
 import {
     SELECT_GIFT,
     UPDATE_SHIPPING_INFO,
@@ -7,7 +8,6 @@ import {
     PLACE_ORDER,
     SET_TRACKING_INFO,
   } from './actions';
-  import { CheckoutState } from '../components/Constants/Constants';
   
   const initialState: CheckoutState = {
     selectedGift: null,

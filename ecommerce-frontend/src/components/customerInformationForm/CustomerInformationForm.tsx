@@ -14,9 +14,7 @@ const CustomerInformationForm = () => {
       city: '',
       zipCode: '',
     })
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
+
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();

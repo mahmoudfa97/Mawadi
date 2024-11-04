@@ -5,7 +5,7 @@ import { useSwipeable } from "react-swipeable";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import OccasionCard from "../OccasionCard/OccasionCard";
 import ProductCard from "../ProductCard/ProductCard";
-import { ICategories, IOccasions, IProduct } from "../Constants/Constants";
+import { IProduct, IOccasions, ICategories } from "../../types/Constants";
 
 interface SwiperComponentProps {
   items: IProduct[] | IOccasions[] | ICategories[];

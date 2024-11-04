@@ -6,6 +6,8 @@ import utilsSlice from './utilssSlice'
 import productReducer from './productsSlice'
 import userReducer from './userSlice'
 import { checkoutReducer } from './reducer'
+import apiReducer from './apiSlice'; // Import the API reducer
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -20,7 +22,8 @@ export const store = configureStore({
     utils: utilsSlice,
     checkout: checkoutReducer,
     products: persistedReducer,
-    user: userReducer, // Add the user reducer
+    user: userReducer, 
+    api: apiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

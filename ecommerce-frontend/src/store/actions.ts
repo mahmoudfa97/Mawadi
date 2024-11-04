@@ -1,4 +1,4 @@
-import { GiftItem, ShippingInfo, OrderSummary, TrackingInfo } from '../components/Constants/Constants';
+import { GiftItem, ShippingInfo, OrderSummary, TrackingInfo } from "../types/Constants";
 
 export const SELECT_GIFT = 'SELECT_GIFT';
 export const UPDATE_SHIPPING_INFO = 'UPDATE_SHIPPING_INFO';

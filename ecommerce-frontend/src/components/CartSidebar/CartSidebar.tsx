@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from "react";
 import { Button } from "@mui/material";
 import { Minus, Plus } from "lucide-react";
 import { decrementQuantity, incrementQuantity, removeFromCart, clearCart } from "../../store/cartSlice";
-import { CartItem } from "../Constants/Constants";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Link } from "react-router-dom";
+import { CartItem } from "../../types/Constants";
 
 interface CartProps {
   isOpen: boolean;

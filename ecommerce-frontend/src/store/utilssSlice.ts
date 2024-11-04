@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IUtils } from '../components/Constants/Constants';
+import { IUtils } from '../types/Constants';
 
 
 const initialState: IUtils = {

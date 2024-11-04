@@ -20,7 +20,7 @@ interface IAddress {
 
 export interface IUser extends Document {
   email: string;
-  password: string;
+  password?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -68,9 +68,9 @@ const GiftPreferenceSchema: Schema = new Schema({
   },
 });
 
-const UserSchema: Schema = new Schema({
+const UserSchema: Schema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String, required: function() { return !this.firebaseUid; } },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   phoneNumber: { type: String, required: true },
@@ -102,48 +102,33 @@ const UserSchema: Schema = new Schema({
   timestamps: true,
 });
 
-// Index for faster queries
 UserSchema.index({ email: 1, referralCode: 1 });
 
-// Virtual for full name
 UserSchema.virtual('fullName').get(function(this: IUser) {
   return `${this.firstName} ${this.lastName}`;
 });
-
 
 function generateReferralCode(): string {
   return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
-UserSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
-  try {
-    const isMatch = await bcrypt.compare(candidatePassword, this.password);
-    console.log('Password comparison result:', isMatch);
-    return isMatch;
-  } catch (error) {
-    console.error('Error comparing passwords:', error);
-    throw error;
+UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+  if (this.password) {
+    return bcrypt.compare(candidatePassword, this.password);
   }
+  return false;
 };
 
 UserSchema.pre<IUser>('save', async function(next) {
-  console.log('Pre-save middleware called');
-  if (this.isModified('password')) {
-    try {
-      const salt = await bcrypt.genSalt(12);
-      this.password = await bcrypt.hash(this.password, salt);
-      console.log('Password hashed successfully');
-    } catch (error) {
-      console.error('Error hashing password:', error);
-      throw error;
-    }
+  if (this.isModified('password') && this.password) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
   }
   if (this.isNew) {
     this.referralCode = generateReferralCode();
   }
   next();
 });
-
 
 const User = mongoose.model<IUser>('User', UserSchema);
 export default User;

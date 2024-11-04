@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box } from '@mui/material';
+import { useAuth } from '../../context/AuthContext';
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState('');

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Sidebar from '../components/Sidebar/Sidebar';
-import { CartItem, IProduct } from '../components/Constants/Constants';
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import { useAppSelector } from '../store/hooks';
+import { CartItem, IProduct } from '../types/Constants';
 const ProductCategoryPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [activeCategory, setActiveCategory] = useState('الجميع');

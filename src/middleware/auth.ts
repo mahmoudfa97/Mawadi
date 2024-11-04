@@ -2,31 +2,32 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User.model';
 import { auth as firebaseAuth } from 'firebase-admin';
-interface customRequest extends Request {
-user?: IUser
+
+interface CustomRequest extends Request {
+  user?: IUser;
 }
-export const authenticateUser = async (req: customRequest, res: Response, next: NextFunction) => {
+
+export const authenticateUser = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
       res.status(401).json({ message: 'Authentication required' });
-      return
+      return; // Early return to stop further execution
     }
 
     let userId: string;
 
     try {
-      // First, try to verify as a JWT token
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
       userId = decoded.id;
     } catch (jwtError) {
-      // If JWT verification fails, try to verify as a Firebase token
       try {
         const decodedToken = await firebaseAuth().verifyIdToken(token);
         userId = decodedToken.uid;
       } catch (firebaseError) {
-        throw new Error('Invalid token');
+        res.status(401).json({ message: 'Invalid token' }); // Send response instead of throwing
+        return; // Early return
       }
     }
 
@@ -34,19 +35,18 @@ export const authenticateUser = async (req: customRequest, res: Response, next: 
 
     if (!user) {
       res.status(401).json({ message: 'User not found' });
-      return
+      return; // Early return
     }
 
     req.user = user;
-    next();
+    next(); // Proceed to the next middleware
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });
   }
 };
-export const authorizeAdmin = (req: customRequest, res: Response, next: NextFunction) => {
-  console.log('req: ',req)
 
-  if (req.body.user && req.body.user.role === 'admin') {
+export const authorizeAdmin = (req: CustomRequest, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'admin') {
     next();
   } else {
     res.status(403).json({ message: 'Admin access required' });

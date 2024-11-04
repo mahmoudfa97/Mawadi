@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct } from '../components/Constants/Constants';
 import axios from 'axios';
 import { PURGE } from 'redux-persist';
+import { IProduct } from '../types/Constants';
 
 interface ProductsState {
     products: IProduct[];

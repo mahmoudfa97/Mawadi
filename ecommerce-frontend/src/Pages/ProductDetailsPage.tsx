@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Star, ShoppingCart, Badge } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import ProductCard from '../components/ProductCard/ProductCard';
-import { IProduct } from '../components/Constants/Constants';
 import { getRelatedProducts } from '../store/productsSlice';
 import { Button, Card, CardContent } from '@mui/material';
 import Accordion from '../components/Accordion/Accordion';

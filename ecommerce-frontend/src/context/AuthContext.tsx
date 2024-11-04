@@ -1,14 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-
 import { signInWithPhoneNumber, User as FirebaseUser, RecaptchaVerifier } from 'firebase/auth';
-import { auth } from '../../firebase'; // Ensure your Firebase config is properly imported
+import { auth } from '../firebase';
 
 interface User {
   id: string;
   email?: string;
   phoneNumber?: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: string;
 }
 
@@ -18,7 +18,7 @@ interface AuthContextType {
   loginWithPhone: (phoneNumber: string) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
   logout: () => void;
-  register: (firstName: any, lastName: any, email: any, password: any, phoneNumber: any) => Promise<void>;
+  register: (firstName: string, lastName: string, email: string, password: string, phoneNumber: string) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -100,7 +100,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const firebaseUser = result.user as FirebaseUser;
       const idToken = await firebaseUser.getIdToken();
       
-      // Exchange Firebase token for your backend token
       const res = await axios.post<{ token: string }>('/api/users/firebase-login', { idToken });
       const { token } = res.data;
       
@@ -113,9 +112,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const register = async (firstName: any, lastName: any, email: any, password: any, phoneNumber: any) => {
+  const register = async (firstName: string, lastName: string, email: string, password: string, phoneNumber: string) => {
     try {
-      const res = await axios.post<{ token: string }>('/api/users/register', { firstName, lastName, email,phoneNumber, password });
+      const res = await axios.post<{ token: string }>('/api/users/register', { firstName, lastName, email, password, phoneNumber });
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);

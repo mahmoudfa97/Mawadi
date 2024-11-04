@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IProduct } from '../Constants/Constants';
 import { useAppDispatch } from '../../store/hooks';
 import { addToCart } from '../../store/cartSlice';
 import { Minus, Plus } from 'lucide-react';
+import { IProduct } from '../../types/Constants';
 
 interface ProductCardProps {
     product: IProduct; 

@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import cartReducer from './cartSlice'
-import utilsSlice from './utilssSlice'
-import productReducer from './productsSlice'
-import userReducer from './userSlice'
+import cartReducer from './slices/cartSlice'
+import utilsSlice from './slices/utilssSlice'
+import productReducer from './slices/productsSlice'
+import userReducer from './slices/userSlice'
 import { checkoutReducer } from './reducer'
-import apiReducer from './apiSlice'; // Import the API reducer
+import apiReducer from './slices/apiSlice'; // Import the API reducer
 
 const persistConfig = {
   key: 'root',

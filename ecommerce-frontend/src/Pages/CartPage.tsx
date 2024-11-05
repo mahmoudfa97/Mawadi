@@ -1,6 +1,6 @@
 import React from "react";
 import {  Minus, Plus } from "lucide-react";
-import { removeFromCart, incrementQuantity, decrementQuantity, updatePersonalization } from "../store/cartSlice";
+import { removeFromCart, incrementQuantity, decrementQuantity, updatePersonalization } from "../store/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import CartHeader from "./cart/header";

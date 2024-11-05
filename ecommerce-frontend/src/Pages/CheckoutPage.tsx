@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../store/hooks'
-import { clearCart } from '../store/cartSlice'
+import { clearCart } from '../store/slices/cartSlice'
 import { PayPalButtons } from "@paypal/react-paypal-js"
 import { useNavigate } from 'react-router-dom'
 import { Gift, Video, CreditCard, Truck } from 'lucide-react';

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import HeroSwiper from "../components/Swiper/HeroSwiper";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { checkForUpdates, fetchProducts, getMostSoldProducts, getPopularItems, getRelatedProducts, getSpecialProducts, getWhatsNewProducts } from "../store/productsSlice";
+import { checkForUpdates, fetchProducts, getMostSoldProducts, getPopularItems, getRelatedProducts, getSpecialProducts, getWhatsNewProducts } from "../store/slices/productsSlice";
 import SwiperComponent from "../components/Slider/Slider";
 
 const Home: React.FC = () => {

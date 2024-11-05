@@ -1,11 +1,9 @@
 // apiSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../types/User';
 
 interface ApiCall {
-  endpoint: string;
-  method: string;
-  data?: any; // Adjust this type based on the expected data structure
-  error?: string; // Optional error message
+  user: IUser
 }
 
 interface ApiState {

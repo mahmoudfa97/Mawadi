@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
-import { addToCart } from '../../store/cartSlice';
+import { addToCart } from '../../store/slices/cartSlice';
 import { Minus, Plus } from 'lucide-react';
 import { IProduct } from '../../types/Constants';
 

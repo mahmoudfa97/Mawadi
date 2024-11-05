@@ -135,8 +135,9 @@ export const firebaseLogin = async (req: Request, res: Response) => {
   }
 };
 export const getUserProfile = async (req: Request, res: Response) => {
+  const { uid } = req.query
   try {
-    const user = await User.findById(req.body.user?.id).select('-password');
+    const user = await User.findOne({ firebaseUid: uid }).select('-password')
     if (!user) {
         res.status(404).json({ message: 'User not found' });
       return

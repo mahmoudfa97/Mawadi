@@ -2,18 +2,14 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { signInWithPhoneNumber, User as FirebaseUser, RecaptchaVerifier } from 'firebase/auth';
 import { auth } from '../firebase';
+import { post, get } from '../services/api';
+import { useAppDispatch } from '../store/hooks';
+import { addApiCall } from '../store/slices/apiSlice';
+import { IUser } from '../types/User';
 
-interface User {
-  id: string;
-  email?: string;
-  phoneNumber?: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
 
 interface AuthContextType {
-  user: User | null;
+  user: IUser | null;
   loginWithEmail: (email: string, password: string) => Promise<void>;
   loginWithPhone: (phoneNumber: string) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
@@ -29,9 +25,10 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -51,10 +48,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const fetchUser = async () => {
+  const fetchUser = async (uid?: string) => {
     try {
-      const res = await axios.get<User>('/api/users/profile');
-      setUser(res.data);
+      if(uid){
+        const res = await get<IUser>('users/profile', { uid })
+        setUser(res.data);
+        dispatch(addApiCall({user: res.data}))
+      }
     } catch (error) {
       console.error('Error fetching user:', error);
       logout();
@@ -65,7 +65,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const loginWithEmail = async (email: string, password: string) => {
     try {
-      const res = await axios.post<{ token: string }>('/api/users/login', { email, password });
+      const res = await post<{ token: string }>('users/login', { email, password });
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
@@ -100,12 +100,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const firebaseUser = result.user as FirebaseUser;
       const idToken = await firebaseUser.getIdToken();
       
-      const res = await axios.post<{ token: string }>('/api/users/firebase-login', { idToken });
+      const res = await post<{ token: string }>('users/firebase-login', { idToken });
       const { token } = res.data;
       
       localStorage.setItem('token', token);
       setAuthToken(token);
-      await fetchUser();
+      await fetchUser(firebaseUser.uid);
     } catch (error) {
       console.error('Phone verification error:', error);
       throw error;
@@ -114,7 +114,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const register = async (firstName: string, lastName: string, email: string, password: string, phoneNumber: string) => {
     try {
-      const res = await axios.post<{ token: string }>('/api/users/register', { firstName, lastName, email, password, phoneNumber });
+      const res = await post<{ token: string }>('users/register', { firstName, lastName, email, password, phoneNumber });
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);

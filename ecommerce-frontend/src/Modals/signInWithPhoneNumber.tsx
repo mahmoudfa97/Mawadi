@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../firebase'; // Ensure your Firebase config is properly imported
 import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { login } from '../store/userSlice';
+import { login } from '../store/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 declare global {

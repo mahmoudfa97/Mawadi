@@ -24,7 +24,7 @@ interface Order {
 }
 
 export default function AdminDashboard() {
-  const { user } = useAuth();
+  const { loadedUser } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-      {user && user.role === 'admin' ? (
+      {loadedUser && loadedUser.role === 'admin' ? (
         <div className="space-y-8">
           <div>
             <h2 className="text-xl font-semibold mb-2">Users</h2>

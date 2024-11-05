@@ -3,13 +3,14 @@ import axios from 'axios';
 import { signInWithPhoneNumber, User as FirebaseUser, RecaptchaVerifier } from 'firebase/auth';
 import { auth } from '../firebase';
 import { post, get } from '../services/api';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addApiCall } from '../store/slices/apiSlice';
+import { setUser } from '../store/slices/userSlice';
 import { IUser } from '../types/User';
 
 
 interface AuthContextType {
-  user: IUser | null;
+  loadedUser: IUser | null;
   loginWithEmail: (email: string, password: string) => Promise<void>;
   loginWithPhone: (phoneNumber: string) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
@@ -25,8 +26,8 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const loadedUser = useAppSelector((state) => state.user.user);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const dispatch = useAppDispatch();
 
@@ -40,6 +41,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+
+  }, [loadedUser]);
   const setAuthToken = (token: string | null) => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -54,6 +58,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         const res = await get<IUser>('users/profile', { uid })
         setUser(res.data);
         dispatch(addApiCall({user: res.data}))
+        dispatch(setUser(res.data))
       }
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -128,12 +133,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     setAuthToken(null);
-    setUser(null);
     auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginWithEmail, loginWithPhone, verifyPhoneCode, logout, register, isLoading }}>
+    <AuthContext.Provider value={{ loadedUser, loginWithEmail, loginWithPhone, verifyPhoneCode, logout, register, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

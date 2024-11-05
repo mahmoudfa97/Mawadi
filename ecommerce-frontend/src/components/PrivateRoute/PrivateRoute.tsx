@@ -9,7 +9,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, allowedRoles = ['admin'] }) => {
-  const { user, isLoading } = useAuth();
+  const { loadedUser, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -20,12 +20,12 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, allowedRoles = ['
     );
   }
 
-  if (!user) {
+  if (!loadedUser) {
     // Redirect to login if user is not authenticated
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
+  if (!allowedRoles.includes(loadedUser.role)) {
     // Redirect to unauthorized page if user doesn't have the required role
     return <Navigate to="/unauthorized" replace />;
   }

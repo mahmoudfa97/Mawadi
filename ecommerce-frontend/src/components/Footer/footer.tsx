@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-8 px-5 xl:px-12 py-8 pb-6 lg:pb-12 lg:py-12">
         {/* Logo Section */}
         <div className="hidden lg:block lg:col-span-1">
-          <div className="flex py-3 items-center cursor-pointer">
+          <div className="flex flex-col py-3 items-center cursor-pointer">
             <img src="/arabic-logo.png" alt="Logo" className="h-12" />
             <p className="text-sm text-right">وجهتك الأولى للهدايا الفريدة والمميزة</p>
           </div>

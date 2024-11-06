@@ -1,72 +1,106 @@
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
-import { useSwipeable } from "react-swipeable";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import OccasionCard from "../OccasionCard/OccasionCard";
 import ProductCard from "../ProductCard/ProductCard";
 import { IProduct, IOccasions, ICategories } from "../../types/Constants";
 
+type Item = IProduct | IOccasions | ICategories;
+
 interface SwiperComponentProps {
-  items: IProduct[] | IOccasions[] | ICategories[];
+  items: Item[];
   title: string;
   linkBasePath: string;
-  type: string;
+  type: 'P' | 'C' | 'O';
 }
-const SwiperComponent = (props: SwiperComponentProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleCount = 5; // Number of items visible at a time
 
-  const handleNext = () => {
-    if (currentIndex < props.items.length - visibleCount) {
-      setCurrentIndex(currentIndex + 1);
+const SwiperComponent: React.FC<SwiperComponentProps> = ({ items, title, linkBasePath, type }) => {
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (scrollOffset: number) => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: scrollOffset, behavior: 'smooth' });
     }
   };
 
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+  const checkArrows = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
     }
   };
 
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: handleNext,
-    onSwipedRight: handlePrev,
-    trackMouse: true,
-  });
+  useEffect(() => {
+    checkArrows();
+    window.addEventListener('resize', checkArrows);
+    return () => window.removeEventListener('resize', checkArrows);
+  }, []);
+
+
+  const renderItem = (item: Item, index: number) => {
+    switch (type) {
+      case 'P':
+        return <ProductCard key={index} product={item as IProduct} />;
+      case 'C':
+        return (
+          <Link key={index} to={`${linkBasePath}/${(item as ICategories).name}`} state={item}>
+            <CategoryCard iname={(item as ICategories).name} icon={(item as ICategories).icon} />
+          </Link>
+        );
+      case 'O':
+        return (
+          <Link key={index} to={`productlisting/${(item as IOccasions).name}`} state={item}>
+            <OccasionCard iname={(item as IOccasions).name} icon={(item as IOccasions).icon} />
+          </Link>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="relative mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-3xl font-bold">{props.title}</h2>
-          <a href={`${props.linkBasePath}`} className="text-gray-500 hover:text-gray-700">
+          <h2 className="text-3xl font-bold">{title}</h2>
+          <Link to={linkBasePath} className="text-gray-500 hover:text-gray-700">
             عرض الكل
-          </a>
+          </Link>
         </div>
-        <div className="hidden lg:flex justify-between absolute top-1/2 left-0 right-0 -mt-4">
-          <button className="bg-white rounded-full p-2 shadow-md" onClick={handlePrev} disabled={currentIndex === 0}>
-            <ChevronRight className="w-6 h-6" />
-          </button>
-          <button className="bg-white rounded-full p-2 shadow-md" onClick={handleNext} disabled={currentIndex >= props.items.length - visibleCount}>
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-        </div>
-        <div {...swipeHandlers} className="flex overflow-x-auto gap-4 pb-4">
-          {props.items.slice(currentIndex, currentIndex + visibleCount).map((item: any, index: number) => (
-            props.type === "P" ? (
-                <ProductCard key={index} product={item} />
-              ) :
-            <Link key={index} to={`${props.type === "O"? 'productlisting' :props.linkBasePath}/${item.name}`} state={item}>
-              {props.type === "C" ? (
-                <CategoryCard key={index} iname={item.name} icon={item.icon} />
-              ) : props.type === "O" ? (
-                <OccasionCard key={index} iname={item.name} icon={item.icon} />
-              ) : (
-                ""
-              )}
-            </Link>
-          ))}
+        <div className="relative">
+          {showLeftArrow && (
+            <button 
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10" 
+              onClick={() => scroll(-200)}
+              aria-label="Previous items"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+          {showRightArrow && (
+            <button 
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10" 
+              onClick={() => scroll(200)}
+              aria-label="Next items"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+          <div 
+            ref={containerRef}
+            className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide"
+            onScroll={checkArrows}
+          >
+            {items.map((item, index) => (
+              <div key={index} className="flex-shrink-0">
+                {renderItem(item, index)}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

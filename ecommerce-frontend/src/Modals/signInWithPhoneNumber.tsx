@@ -4,7 +4,7 @@ import { auth } from '../firebase'; // Ensure your Firebase config is properly i
 import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { login } from '../store/slices/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 declare global {
     interface Window {
@@ -93,8 +93,8 @@ const LoginWithNumber: React.FC = () => {
 
         <p className="text-sm text-gray-600 mt-4 text-center">
           باستمرارك فإنك توافق على 
-          <a href='/' className="text-blue-500 hover:underline"> الشروط والأحكام </a> و 
-          <a href='/' className="text-blue-500 hover:underline"> سياسة الخصوصية </a>
+          <Link to='/' className="text-blue-500 hover:underline"> الشروط والأحكام </Link> و 
+          <Link to='/' className="text-blue-500 hover:underline"> سياسة الخصوصية </Link>
         </p>
 
         {message && <p className="text-center text-green-500 mt-2">{message}</p>}

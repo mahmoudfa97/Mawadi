@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from '../../utils/toast';
+import { sendEmail } from '../../services/emailService';
 
 const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,6 +8,7 @@ const ContactUs: React.FC = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -15,12 +18,26 @@ const ContactUs: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      await sendEmail(formData);
+      let  message = {
+        title: "تم إرسال الرسالة بنجاح",
+        description: "شكرًا لتواصلك معنا. سنرد عليك في أقرب وقت ممكن.",
+      }
+      toast(message, 'success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      toast({
+        title: "حدث خطأ",
+        description: "عذرًا، لم نتمكن من إرسال رسالتك. يرجى المحاولة مرة أخرى لاحقًا.",
+      }, 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -36,7 +53,7 @@ const ContactUs: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
           />
         </div>
         <div className="mb-4">
@@ -48,7 +65,7 @@ const ContactUs: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
           />
         </div>
         <div className="mb-4">
@@ -60,12 +77,16 @@ const ContactUs: React.FC = () => {
             onChange={handleChange}
             required
             rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
           ></textarea>
         </div>
         <div className="text-right">
-          <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            إرسال
+          <button 
+            type="submit" 
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'جاري الإرسال...' : 'إرسال'}
           </button>
         </div>
       </form>

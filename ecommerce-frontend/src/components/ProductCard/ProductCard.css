@@ -1,0 +1,46 @@
+.product-card {
+    position: relative;
+    overflow: hidden
+}
+
+.product-card:before {
+    position: absolute;
+    top: 0;
+    left: -75%;
+    z-index: 2;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(240,240,240,.5) 100%);
+    transform: skew(-25deg)
+}
+
+.group:hover .product-card:before {
+    animation: shine 1s ease-in-out
+}
+
+.product-card:hover:before {
+    animation: shine 1s ease-in-out
+}
+
+@keyframes shine {
+    to {
+        left: 125%
+    }
+}
+
+.zoom-animation {
+    animation: zoom .7s ease-in-out forwards
+}
+
+@keyframes zoom {
+    0% {
+        scale: .3
+    }
+
+    to {
+        scale: 1
+    }
+}

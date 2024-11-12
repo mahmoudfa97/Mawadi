@@ -1,0 +1,24 @@
+.font-customBold,.font-myfont {
+    font-weight: 700;
+    font-family: Cairo-Bold
+}
+
+.font-customSemiBold {
+    font-weight: 600;
+    font-family: Cairo-SemiBold
+}
+
+.font-customMedium {
+    font-weight: 500;
+    font-family: Cairo-Medium
+}
+
+.font-customRegular {
+    font-weight: 400;
+    font-family: Cairo-Regular
+}
+
+.font-customLight {
+    font-weight: 300;
+    font-family: Cairo-Light
+}

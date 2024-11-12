@@ -49,7 +49,6 @@ const AppRoutes: React.FC = () => (
     </Route>
     {/* Catch-all Redirect to Home */}
     <Route path="/categories" element={<CategoriesPage />} />
-    <Route path="/categories/:name" element={<ProductCategoryPage />} />
     <Route path="/mawadda-tree" element={<CategoriesPage />} />
     <Route path="/bestsellers" element={<ProductCategoryPage />} />
     <Route path="/occasions" element={<OccasionsPage />} />

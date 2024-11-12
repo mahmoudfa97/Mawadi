@@ -55,7 +55,7 @@ const CartPage: React.FC = () => {
                       </div>
                        <div className="flex justify-between gap-5 items-end">
                       <div className="flex flex-wrap gap-2 attribute items-center justify-start ng-star-inserted">
-                        <a href="" className="text-sm flex gap-2 items-center font-customMedium text-[#8A8A8A] after:content-['|'] after:text-sm after:font-customMedium after:text-[#8A8A8A] ng-star-inserted"></a>
+                        <Link to="" className="text-sm flex gap-2 items-center font-customMedium text-[#8A8A8A] after:content-['|'] after:text-sm after:font-customMedium after:text-[#8A8A8A] ng-star-inserted"></Link>
                       </div>
                       <button onClick={() => dispatch(removeFromCart(`${item.id}`))} className="w-3 sm:w-4 cursor-pointer">
                         حذف

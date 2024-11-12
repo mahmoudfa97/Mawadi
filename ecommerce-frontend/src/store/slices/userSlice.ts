@@ -1,15 +1,16 @@
 // src/slices/userSlice.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../types/User';
 
 interface UserState {
-    user: null | { id: string; name: string; email: string };
+    user: IUser | null
     isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
-    user: null,
     isLoggedIn: false,
+    user: null
 };
 
 const userSlice = createSlice({
@@ -24,7 +25,7 @@ const userSlice = createSlice({
             state.user = null;
             state.isLoggedIn = false;
         },
-        setUser(state, action: PayloadAction<{ id: string; name: string; email: string }>) {
+        setUser(state, action: PayloadAction<IUser>) {
             state.user = action.payload;
         },
     },

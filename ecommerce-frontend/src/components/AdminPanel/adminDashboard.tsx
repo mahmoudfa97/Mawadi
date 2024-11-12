@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import { del, get, put } from '../../services/api';
 
 interface User {
   _id: string;
@@ -24,10 +25,10 @@ interface Order {
 }
 
 export default function AdminDashboard() {
-  const { user } = useAuth();
-  const [users, setUsers] = useState<User[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const { loadedUser } = useAuth();
+  const [users, setUsers] = useState<User[]| any>([]);
+  const [products, setProducts] = useState<Product[]| any>([]);
+  const [orders, setOrders] = useState<Order[] | any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
@@ -36,15 +37,16 @@ export default function AdminDashboard() {
   }, [currentPage]);
 
   const fetchData = async () => {
+    let userRole = {role: loadedUser?.role}
     try {
       const [usersRes, productsRes, ordersRes] = await Promise.all([
-        axios.get(`/api/admin/users?page=${currentPage}&limit=${itemsPerPage}`),
-        axios.get(`/api/products?page=${currentPage}&limit=${itemsPerPage}`),
-        axios.get(`/api/admin/orders?page=${currentPage}&limit=${itemsPerPage}`)
+        (await get(`/v2/admin/users` )),
+        ((await get(`/v2/admin/products`))),
+        get(`/v2/admin/orders`)
       ]);
-      setUsers(usersRes.data.users);
-      setProducts(productsRes.data.products);
-      setOrders(ordersRes.data.orders);
+      setUsers(usersRes?.data);
+      setProducts(productsRes?.data);
+      setOrders(ordersRes?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -53,8 +55,8 @@ export default function AdminDashboard() {
   const handleDeleteUser = async (userId: string) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`/api/admin/users/${userId}`);
-        setUsers(users.filter(user => user._id !== userId));
+        await del(`/v2/admin/users/${userId}`);
+        setUsers(users.filter((user:any) => user._id !== userId));
       } catch (error) {
         console.error('Error deleting user:', error);
       }
@@ -63,8 +65,8 @@ export default function AdminDashboard() {
 
   const handleUpdateProduct = async (productId: string, updatedData: Partial<Product>) => {
     try {
-      const res = await axios.put(`/api/admin/products/${productId}`, updatedData);
-      setProducts(products.map(product => product._id === productId ? res.data : product));
+      const res = await put(`/v2/admin/products/${productId}`, updatedData);
+      setProducts(products.map((product: any) => product._id === productId ? res.data : product));
     } catch (error) {
       console.error('Error updating product:', error);
     }
@@ -72,8 +74,8 @@ export default function AdminDashboard() {
 
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const res = await axios.put(`/api/admin/orders/${orderId}`, { status: newStatus });
-      setOrders(orders.map(order => order._id === orderId ? res.data : order));
+      const res = await axios.put(`/v2/admin/orders/${orderId}`, { status: newStatus });
+      setOrders(orders.map((order:any) => order._id === orderId ? res.data : order));
     } catch (error) {
       console.error('Error updating order status:', error);
     }
@@ -82,7 +84,7 @@ export default function AdminDashboard() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-      {user && user.role === 'admin' ? (
+      {loadedUser && loadedUser.role === 'admin' ? (
         <div className="space-y-8">
           <div>
             <h2 className="text-xl font-semibold mb-2">Users</h2>
@@ -96,7 +98,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {users.map((user) => (
+                {users.map((user:any) => (
                   <tr key={user._id}>
                     <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
@@ -127,7 +129,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {products.map((product) => (
+                {products.map((product:any) => (
                   <tr key={product._id}>
                     <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap">${product.price.toFixed(2)}</td>
@@ -166,7 +168,7 @@ export default function AdminDashboard() {
               
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {orders.map((order) => (
+                {orders.map((order:any) => (
                   <tr key={order._id}>
                     <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>

@@ -18,6 +18,7 @@ import occasionRoutes from './src/routes/occasionRoutes';
 import couponRoutes from './src/routes/couponRoute';
 import giftCardRoutes from './src/routes/giftCardRoutes';
 import adminRoutes from './src/routes/adminRoutes';
+import servicesRoutes from './src/routes/servicesRoutes';
 
 import './src/firebase';
 
@@ -42,6 +43,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/occasions', occasionRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/giftcards', giftCardRoutes);
+app.use('/api/services', servicesRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL as string)

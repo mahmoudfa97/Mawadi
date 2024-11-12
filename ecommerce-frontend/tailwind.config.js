@@ -3,7 +3,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        myfont: ['"Cairo"', "sans-serif"],
+        customSemiBold: ['"Cairo"', "SemiBold"],
+        customMedium: ['"Cairo"', "Medium"],
+        customRegular: ['"Cairo"', "Regular"],
+        
+      },
+    },
   },
   plugins: [],
 }

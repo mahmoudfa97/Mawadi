@@ -32,8 +32,12 @@ const ManageProducts: React.FC = () => {
       setProducts(response.data);
       setError(null);
     } catch (err) {
+      let  message = {
+        title: "Failed to fetch products",
+        description: " Please try again later.",
+      }
       setError('Failed to fetch products. Please try again later.');
-      toast('Failed to fetch products. Please try again later.', 'error');
+      toast(message, 'error');
     } finally {
       setLoading(false);
     }
@@ -42,10 +46,16 @@ const ManageProducts: React.FC = () => {
   const deleteProduct = async (productId: string) => {
       try {
         await del(`/products/${productId}`);
+        let  message = {
+          title: "Product deleted successfully.",
+        }
         setProducts(products.filter(product => product._id !== productId));
-        toast('Product deleted successfully.');
+        toast(message, 'success');
       } catch (err) {
-        toast('Failed to delete product. Please try again.', 'error');
+        let  message = {
+          title: "Failed to delete product. Please try again.",
+        }
+        toast(message, 'error');
       }
     
   };

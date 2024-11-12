@@ -1,96 +1,105 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../store/hooks';
-import { addToCart } from '../../store/slices/cartSlice';
-import { Minus, Plus } from 'lucide-react';
-import { IProduct } from '../../types/Constants';
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { addToCart, incrementQuantity, decrementQuantity } from "../../store/slices/cartSlice";
+import { Minus, Plus } from "lucide-react";
+import { IProduct } from "../../types/Constants";
+import './ProductCard.css'
 interface ProductCardProps {
-    product: IProduct; 
+  product: IProduct;
+  linkBasePath?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-    const dispatch = useAppDispatch();
-    
-    const [quantity, setQuantity] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
-    const [showQuantityInput, setShowQuantityInput] = useState(false);
+  const dispatch = useAppDispatch();
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [showQuantityInputs, setShowQuantityInputs] = useState<{ [key: number]: boolean }>({});
 
-    const incrementQuantity = () => {
-      setQuantity(prev => prev + 1);
-    }
-  
-    const decrementQuantity = () => {
-      setQuantity(prev => Math.max(prev - 1, 0));
-    }
+  const incrementQuantities = (id: number) => {
+    setQuantities(prev => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
+    dispatch(incrementQuantity(id));
 
-    const handleAddToCart = () => {
-      dispatch(addToCart({ ...product }));
-    }
+  };
 
-    const handleQuantityButtonClick = () => {
-      if (quantity === 0) {
-        setQuantity(1);
-      }
-      setShowQuantityInput(true);
+  const decrementQuantities = (id: number) => {
+    if(quantities[id] === 1){
+      setShowQuantityInputs(prev => ({ ...prev, [product.id]: false }))
     }
+    setQuantities(prev => ({ ...prev, [id]: Math.max((prev[id] || 1) - 1, 1) }));
+    dispatch(decrementQuantity(id));
 
-    return (
-      <div 
-        className="w-64 bg-white rounded-lg shadow-md overflow-hidden" 
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="relative h-64 w-full">
-          <Link to={`/products/:${product.name}`} state={product}> 
+  };
+
+  const handleAddToCart = (product: IProduct) => {
+     dispatch(addToCart({ item: { ...product, quantity: quantities[product.id] || 1 }, quantity: quantities[product.id] || 1 }));
+    setShowQuantityInputs(prev => ({ ...prev, [product.id]: true }));
+    // add a toast notification here
+  };
+
+  return (
+    <div key={product.id} className="flex mx-auto px-4 py-8">
+    <div className="relative group">
+      <div className="cursor-pointer">
+        <div className="product-card aspect-square hover:zoom-animation">
+          <Link to={`/products/${product.name}`} state={product}>
             <img
-              src={`/${product.image}`}
+              src={product.image}
               alt={product.name}
-              className="h-64 w-full object-cover"
+              className="aspect-square object-cover w-full rounded-md"
             />
           </Link>
         </div>
-        <div className="p-4 h-[180px] flex flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-semibold mb-2 h-12 line-clamp-2 overflow-hidden">{product.name}</h3>
-            <p className="text-gray-600 mb-4">{product.price?.toFixed(2)} {product.currency}</p>
-          </div>
-          {product.inStock ? (
-            <div className="flex w-full duration-700 ease-in-out transition-all relative overflow-hidden rounded-md items-center">
-              <div className={`flex justify-between items-center gap-1 w-full duration-700 ease-in-out transition-all ${showQuantityInput ? 'opacity-100' : 'opacity-0 rtl:translate-x-full ltr:-translate-x-full'}`}>
-                <button 
-                  onClick={decrementQuantity} 
+        <p className="text-black font-customSemiBold text-[13px] md:text-sm lg:text-base name mt-2 text-wrap-name">
+          {product.name}
+        </p>
+        <div className="flex flex-wrap gap-1 items-center">
+          <p className="text-themeColor font-customSemiBold text-[13px] price sm:text-sm lg:text-base mt-1">
+            {product.price.toFixed(2)} {product.currency}
+          </p>
+        </div>
+      </div>
+
+      {product.inStock ? (
+        <div className="hidden lg:flex lg:absolute lg:bottom-16 quantity-button-div w-full pt-2 lg:p-4 lg:group-hover:opacity-100 lg:opacity-0 hover-div lg:group-hover:translate-y-0 lg:translate-y-3 duration-700 ease-in-out">
+          <div className="w-full">
+            {showQuantityInputs[product.id] ? (
+              <div className="flex justify-between items-center gap-1 w-full duration-700 ease-in-out transition-all">
+                <button
+                  onClick={() => decrementQuantities(product.id)}
                   className="themeButton button-style bg-[#F8F8F8] border-0 h-7 aspect-square sm:h-8 w-7 sm:w-[2.5rem] flex justify-center items-center p-0"
                 >
                   <Minus className="size-[10px] md:size-4 duration-500 ease-in-out" />
                 </button>
                 <div className="border-none quantity-text text-base flex justify-center items-center p-1 h-7 sm:h-8 button-style aspect-square md:min-w-[2.5rem] text-center font-bold cursor-pointer rounded-md text-black bg-[#F8F8F8]">
-                  <span className="pb-[0.5px]">{quantity}</span>
+                  <span className="pb-[0.5px]">{quantities[product.id] || 1}</span>
                 </div>
-                <button 
-                  onClick={incrementQuantity} 
+                <button
+                  onClick={() => incrementQuantities(product.id)}
                   className="themeButton button-style duration-500 bg-[#F8F8F8] border-0 h-7 w-7 aspect-square sm:h-8 sm:w-[2.5rem] flex justify-center items-center p-0"
                 >
                   <Plus className="size-[10px] md:size-4 duration-500 ease-in-out" />
                 </button>
               </div>
-              <div className={`flex duration-700 absolute left-0 ease-in-out transition-all w-full justify-center ${showQuantityInput ? 'opacity-0' : 'opacity-100'}`}>
-                <button 
-                  onClick={handleQuantityButtonClick}
+            ) : (
+              <div className="flex justify-between items-center gap-1 w-full duration-700 ease-in-out transition-all opacity-100">
+                <button
+                  onClick={() => handleAddToCart(product)}
                   className="themeButton button-style main-plus-button duration-500 bg-[#F8F8F8] border-0 h-7 sm:h-8 w-full flex justify-center items-center p-0"
                 >
                   <Plus className="size-[10px] md:size-4 duration-500 ease-in-out" />
                 </button>
               </div>
-            </div>
-          ) : (
-            <button disabled className="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded-md cursor-not-allowed">
-              نفذت الكمية
-            </button>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-    );
+      ) : (
+        <button disabled className="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded-md cursor-not-allowed">
+          نفذت الكمية
+        </button>
+      )}
+    </div>
+  </div>
+  );
 };
 
 export default ProductCard;

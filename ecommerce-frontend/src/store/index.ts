@@ -15,6 +15,7 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, productReducer);
+const persistedReduceruser = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
@@ -22,7 +23,7 @@ export const store = configureStore({
     utils: utilsSlice,
     checkout: checkoutReducer,
     products: persistedReducer,
-    user: userReducer, 
+    user: persistedReduceruser, 
     api: apiReducer,
   },
   middleware: (getDefaultMiddleware) =>

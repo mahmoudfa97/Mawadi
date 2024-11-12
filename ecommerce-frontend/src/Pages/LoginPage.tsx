@@ -43,7 +43,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await verifyPhoneCode(verificationCode);
-      navigate('/myprofile');
+      navigate('/admin');
     } catch (err) {
       setError('Invalid verification code');
     }

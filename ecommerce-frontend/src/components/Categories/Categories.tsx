@@ -26,9 +26,9 @@ const Categories = () => {
       <div className="relative mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold">الفئات</h2>
-          <a href="/categories" className="text-gray-500 hover:text-gray-700">
+          <Link to="/categories" className="text-gray-500 hover:text-gray-700">
             عرض الكل
-          </a>
+          </Link>
         </div>
         <div className="hidden lg:flex justify-between absolute top-1/2 left-0 right-0 -mt-4">
           <button
@@ -48,7 +48,7 @@ const Categories = () => {
         </div>
         <div className="flex overflow-x-auto gap-4 pb-4">
           {categories.slice(currentIndex, currentIndex + visibleCount).map((category, index) => (
-            <Link key={index} to={`/categories/${category.name}`}>
+            <Link key={index} to={`/productlisting/${category.name}`}>
               <CategoryCard iname={category.name} icon={category.icon} />
             </Link>
           ))}

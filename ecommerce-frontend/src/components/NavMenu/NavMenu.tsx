@@ -6,7 +6,7 @@ const NavMenuItems = [
     { text: 'الأكثر مبيعاً', eng:"Most Selled",href: '/product/listing/best-seller' },
     { text: 'فئات', eng:"Categories",href: '/product/categories', isMenu: true},
     { text: 'مناسبات',eng:"Occasions", href: '/product/occasion', isMenu: true },
-    { text: 'سحر مودة',eng:"Mawadi Magic", href: '/mawadi-magic' },
+    { text: 'سحر مودة',eng:"Mawadi Magic", href: '/mawaddi-magic' },
 ]
 const NavMenu = () => {
     return (

@@ -30,6 +30,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const loadedUser = useAppSelector((state) => state.user.user);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const dispatch = useAppDispatch();
+  let appVerifier: RecaptchaVerifier | null = null;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -51,6 +52,15 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       delete axios.defaults.headers.common['Authorization'];
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (appVerifier) {
+        appVerifier.clear();
+        appVerifier = null;
+      }
+    };
+  }, []);
 
   const fetchUser = async (uid?: string) => {
     try {
@@ -83,14 +93,19 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const loginWithPhone = async (phoneNumber: string) => {
     try {
-      const appVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+
+      appVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
         size: 'invisible',
       });
-      
+  
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
       setConfirmationResult(confirmation);
     } catch (error) {
       console.error('Phone login error:', error);
+      if (appVerifier) {
+        appVerifier.clear(); 
+        appVerifier = null;
+      }
       throw error;
     }
   };

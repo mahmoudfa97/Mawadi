@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import LoginWithNumber from './signInWithPhoneNumber';
 import LoginWithGooglePopUp from './loginWithGooglePopUp';
+import LoginPage from '../Pages/LoginPage';
 interface CustomProps{
     isOpen: boolean
     closeModal: ()=>void
@@ -26,9 +27,9 @@ export default function ResponsiveDialog(props: CustomProps) {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-          <LoginWithNumber />
-          <br />
-          <LoginWithGooglePopUp />
+        <div className="flex mx-auto px-4 py-8">
+         <LoginPage />
+        </div>
       </Dialog>
     </React.Fragment>
   );

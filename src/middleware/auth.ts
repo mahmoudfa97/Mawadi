@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User, { IUser } from '../models/User.model';
+import User from '../models/User.model';
 import { auth as firebaseAuth } from 'firebase-admin';
 
 interface CustomRequest extends Request {
-  user?: IUser;
+  role?: string;
 }
 
 export const authenticateUser = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
@@ -38,7 +38,7 @@ export const authenticateUser = async (req: CustomRequest, res: Response, next: 
       return; // Early return
     }
 
-    req.user = user;
+    req.role = user.role;
     next(); // Proceed to the next middleware
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });
@@ -46,7 +46,7 @@ export const authenticateUser = async (req: CustomRequest, res: Response, next: 
 };
 
 export const authorizeAdmin = (req: CustomRequest, res: Response, next: NextFunction) => {
-  if (req.user && req.user.role === 'admin') {
+  if (req.headers.role && req.headers.role === 'admin') {
     next();
   } else {
     res.status(403).json({ message: 'Admin access required' });

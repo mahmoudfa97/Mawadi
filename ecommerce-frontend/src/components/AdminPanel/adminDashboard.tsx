@@ -24,9 +24,9 @@ interface Order {
   status: string;
 }
 
-export default function AdminDashboard() {
+export default function  AdminDashboard() {
   const { loadedUser } = useAuth();
-  const [users, setUsers] = useState<User[]| any>([]);
+  const [users, setUsers] = useState<any>([]);
   const [products, setProducts] = useState<Product[]| any>([]);
   const [orders, setOrders] = useState<Order[] | any>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,25 +37,25 @@ export default function AdminDashboard() {
   }, [currentPage]);
 
   const fetchData = async () => {
-    let userRole = {role: loadedUser?.role}
+    const userRole = loadedUser?.role || 'user';
     try {
-      const [usersRes, productsRes, ordersRes] = await Promise.all([
-        (await get(`/v2/admin/users` )),
-        ((await get(`/v2/admin/products`))),
-        get(`/v2/admin/orders`)
+      const [usersRes, ordersRes] = await Promise.all([
+        (await get(`/v2/admin/users`, {}, userRole )),
+        ((await  get(`/v2/admin/orders`, {}, userRole)))
       ]);
-      setUsers(usersRes?.data);
-      setProducts(productsRes?.data);
-      setOrders(ordersRes?.data);
+      setUsers(usersRes.data);
+      setOrders(ordersRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   const handleDeleteUser = async (userId: string) => {
+    const userRole = loadedUser?.role || 'user';
+
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await del(`/v2/admin/users/${userId}`);
+        await del(`/v2/admin/users/${userId}`, userRole);
         setUsers(users.filter((user:any) => user._id !== userId));
       } catch (error) {
         console.error('Error deleting user:', error);
@@ -64,8 +64,9 @@ export default function AdminDashboard() {
   };
 
   const handleUpdateProduct = async (productId: string, updatedData: Partial<Product>) => {
+    const userRole = loadedUser?.role || 'user';
     try {
-      const res = await put(`/v2/admin/products/${productId}`, updatedData);
+      const res = await put(`/v2/admin/products/${productId}`, updatedData, userRole);
       setProducts(products.map((product: any) => product._id === productId ? res.data : product));
     } catch (error) {
       console.error('Error updating product:', error);
@@ -73,8 +74,10 @@ export default function AdminDashboard() {
   };
 
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
+    const userRole = loadedUser?.role || 'user';
     try {
-      const res = await axios.put(`/v2/admin/orders/${orderId}`, { status: newStatus });
+      const res = await axios.put(`/v2/admin/orders/${orderId}`, { status: newStatus,
+        role: userRole });
       setOrders(orders.map((order:any) => order._id === orderId ? res.data : order));
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -93,15 +96,17 @@ export default function AdminDashboard() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {users.map((user:any) => (
+                {users["users"]?.map((user:any) => (
                   <tr key={user._id}>
-                    <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{`${user.firstName} ${user.lastName}`}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{user.phoneNumber}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
@@ -168,26 +173,7 @@ export default function AdminDashboard() {
               
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {orders.map((order:any) => (
-                  <tr key={order._id}>
-                    <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">${order.totalAmount.toFixed(2)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <select
-                        value={order.status}
-                        onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
+          
               </tbody>
             </table>
           </div>

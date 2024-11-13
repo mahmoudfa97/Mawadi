@@ -36,6 +36,8 @@ const Login: React.FC = () => {
       setIsVerifying(true);
     } catch (err) {
       setError('Invalid phone number');
+      setIsVerifying(false);
+
     }
   };
 
@@ -48,7 +50,17 @@ const Login: React.FC = () => {
       setError('Invalid verification code');
     }
   };
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value;
+    
+    // If the phone number starts with "0" and has no country code
+    if (input.startsWith('0') && !input.startsWith('+')) {
+      // Replace "0" with country code, e.g., "+1"
+      input = '+972' + input.slice(1);
+    }
 
+    setPhoneNumber(input);
+  };
   return (
     <Box sx={{ maxWidth: 300, margin: 'auto', mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -97,7 +109,7 @@ const Login: React.FC = () => {
               margin="normal"
               type="tel"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={handlePhoneNumberChange}
               required
             />
           ) : (

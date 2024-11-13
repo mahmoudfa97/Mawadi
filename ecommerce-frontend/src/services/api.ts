@@ -17,9 +17,25 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const get = <T>(url: string, params?: object) => api.get<T>(url, { params });
-export const post = <T>(url: string, data: object) => api.post<T>(url, data);
-export const put = <T>(url: string, data: object) => api.put<T>(url, data);
-export const del = <T>(url: string) => api.delete<T>(url);
+export const get = <T>(url: string, params?: object, role?: string) =>
+  api.get<T>(url, {
+    params,
+    headers: role ? { role } : {},
+  });
+
+export const post = <T>(url: string, data: object, role?: string) =>
+  api.post<T>(url, data, {
+    headers: role ? { role } : {},
+  });
+
+export const put = <T>(url: string, data: object, role?: string) =>
+  api.put<T>(url, data, {
+    headers: role ? { role } : {},
+  });
+
+export const del = <T>(url: string, role?: string) =>
+  api.delete<T>(url, {
+    headers: role ? { role } : {},
+  });
 
 export default api;

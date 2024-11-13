@@ -22,6 +22,8 @@ import ProductCategoryPage from "./Pages/ProductCategoryPage";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
 import RegisterPage from "./Pages/RegisterPage";
 import Home from "./Pages/Home";
+import FAQ from "./Pages/Faq";
+import MawadiMagic from "./Pages/MawadiMagic";
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -30,6 +32,7 @@ const AppRoutes: React.FC = () => (
     <Route path="/contact-us" element={<ContactUs />} />
     <Route path="/terms" element={<Terms />} />
     <Route path="/privacy" element={<Privacy />} />
+    <Route path="/faq" element={<FAQ />} />
     <Route path="/data-deletion" element={<DataDeletion />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/myprofile" element={<Profile />} />
@@ -49,7 +52,7 @@ const AppRoutes: React.FC = () => (
     </Route>
     {/* Catch-all Redirect to Home */}
     <Route path="/categories" element={<CategoriesPage />} />
-    <Route path="/mawadda-tree" element={<CategoriesPage />} />
+    <Route path="/mawaddi-magic" element={<MawadiMagic />} />
     <Route path="/bestsellers" element={<ProductCategoryPage />} />
     <Route path="/occasions" element={<OccasionsPage />} />
     <Route path="/productlisting/:name" element={<ProductCategoryPage />} />

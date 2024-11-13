@@ -81,7 +81,7 @@ const handleDropDOwn = () => {
                 onMouseLeave={() => setHoveredCategory(null)}>  {isArabic ? 'فئات' : 'Categories'}</Link>
           <Link to="/occasions" className="text-gray-700 hover:text-gray-900 transition"    onMouseEnter={() => setHoveredCategory('مناسبات')}
                 onMouseLeave={() => setHoveredCategory(null)}>  {isArabic ? 'مناسبات' : 'Occasions'}</Link>
-          <Link to="/mawadda-tree" className="text-gray-700 hover:text-gray-900 transition"> {isArabic ? 'سحر مودة ' : 'Mawadi-Magic'}</Link>
+          <Link to="/mawaddi-magic" className="text-gray-700 hover:text-gray-900 transition"> {isArabic ? 'سحر مودة ' : 'Mawadi-Magic'}</Link>
         </nav>
   
         <div className="flex-end text-center">

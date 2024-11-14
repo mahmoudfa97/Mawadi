@@ -89,3 +89,29 @@
 {"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T09:54:00.523Z"}
 {"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T10:03:03.365Z"}
 {"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T10:03:04.992Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:22:34.479Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:22:36.076Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:26:02.481Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:26:04.170Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:26:40.668Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:26:42.179Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:27:24.326Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:27:25.959Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:27:39.537Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:27:41.031Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:33:10.992Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:33:12.630Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:35:32.774Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:35:34.392Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:35:42.029Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:35:43.522Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:36:37.979Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:36:39.534Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:37:38.169Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:37:39.743Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:38:08.300Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:38:09.746Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:38:22.491Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:38:24.005Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-13T23:39:31.462Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-13T23:39:33.034Z"}

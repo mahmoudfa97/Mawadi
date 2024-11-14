@@ -98,7 +98,7 @@ const ProductCategoryPage: React.FC = () => {
       <div className="px-6 hidden lg:block">
         <div className="hidden lg:block sm:w-[96%] xl:w-[92%] mx-auto px-4 md:px-10 py-2 bg-[#F8F8F8]">
           <ul className="flex gap-2 items-center">
-            <li><Link to="/ar/home" className="text-xs text-black capitalize font-customLight text-wrap-name">بيت</Link></li>
+            <li><Link to="/" className="text-xs text-black capitalize font-customLight text-wrap-name">بيت</Link></li>
             <li><span className="text-black text-xs font-customLight text-wrap-name">/</span></li>
             <li><span className="text-black text-xs text-wrap-name capitalize font-customBold">{activeCategory}</span></li>
           </ul>

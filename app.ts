@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
+import i18next from 'i18next';
+import * as i18nextMiddleware from 'i18next-http-middleware'; // Adjust import here
+import Backend from 'i18next-fs-backend';
 
 import { errorHandler } from './src/middleware/errorHandler';
 import { limiter } from './src/middleware/security';
@@ -19,7 +22,7 @@ import couponRoutes from './src/routes/couponRoute';
 import giftCardRoutes from './src/routes/giftCardRoutes';
 import adminRoutes from './src/routes/adminRoutes';
 import servicesRoutes from './src/routes/servicesRoutes';
-
+import translationRoutes from './src/routes/translationRoutes'
 import './src/firebase';
 
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -34,6 +37,7 @@ app.use(helmet());
 app.use(limiter);
 
 // Routes
+app.use('/api/translate', translationRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/v2/admin', adminRoutes);
 app.use('/api/users', userRoutes);
@@ -54,6 +58,25 @@ mongoose.connect(process.env.MONGO_URL as string)
   });
 
 app.use(errorHandler);
+// Initialize i18next with backend and middleware configuration
+i18next
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    preload: ['en', 'ar'],
+    ns: ['aboutUs'],
+    defaultNS: 'aboutUs',
+    backend: {
+      loadPath: './src/translations/{{lng}}/{{ns}}.json',
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
+// Use `handle` for middleware
+app.use(i18nextMiddleware.handle(i18next));
 
 app.listen(PORT, () => {
   logger.info(`Server running on http://localhost:${PORT}`);

@@ -7,12 +7,12 @@ import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import { getRelatedProducts } from '../store/slices/productsSlice';
 import { IProduct } from '../types/Constants';
 import { addToCart } from '../store/slices/cartSlice';
+import ProductCard from '../components/ProductCard/ProductCard';
 
 const ProductDetailsPage: React.FC = () => {
-  const { SKU } = useParams<{ SKU: string }>();
   const dispatch = useAppDispatch();
   const location = useLocation(); 
-  const { products, relatedProducts } = useAppSelector((state) => state.products);
+  const { relatedProducts } = useAppSelector((state) => state.products);
   const [selectedImage, setSelectedImage] = useState('');
 
   const currentProduct = location.state
@@ -120,15 +120,7 @@ const ProductDetailsPage: React.FC = () => {
           <h2 className="text-2xl font-bold mb-8">ما يشتريه الناس عادةً</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {relatedProducts.map((relatedProduct: IProduct) => (
-              <Link to={`/products/${relatedProduct.SKU}`} state={relatedProduct} key={relatedProduct.id} className="block">
-                <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                  <img src={relatedProduct.image} alt={relatedProduct.name} className="w-full h-48 object-cover rounded-t-lg" />
-                  <div className="p-4">
-                    <h3 className="font-semibold text-lg mb-2">{relatedProduct.name}</h3>
-                    <p className="text-gray-600">{`${relatedProduct.price} ${relatedProduct.currency}`}</p>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard product={relatedProduct}/>
             ))}
           </div>
         </section>

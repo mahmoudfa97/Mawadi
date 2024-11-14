@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Tabs, Tab } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-
-const Login: React.FC = () => {
+interface LoginProps {
+  handleClose?: () => void
+}
+const Login = (props: LoginProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +47,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await verifyPhoneCode(verificationCode);
-      navigate('/admin');
+      props.handleClose? props.handleClose() : navigate('/admin')
     } catch (err) {
       setError('Invalid verification code');
     }

@@ -19,7 +19,7 @@ export default function ResponsiveDialog(props: CustomProps) {
         aria-labelledby="responsive-dialog-title"
       >
         <div className="flex mx-auto px-4 py-8">
-         <LoginPage />
+         <LoginPage handleClose={handleClose}/>
         </div>
       </Dialog>
     </React.Fragment>

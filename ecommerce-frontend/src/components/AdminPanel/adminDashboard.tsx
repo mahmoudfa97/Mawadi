@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { del, get, put } from '../../services/api';
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Mail, ShoppingBag, DollarSign, Package, TrendingUp } from 'lucide-react';
+import StatCard from './StatCard';
+import LatestOrders from './LatestOrders';
+import LatestTransactions from './LatestTransactions';
+import Inbox from './Inbox';
+import OrderForm from './OrderForm';
 interface User {
   _id: string;
   name: string;
@@ -31,6 +37,14 @@ export default function  AdminDashboard() {
   const [orders, setOrders] = useState<Order[] | any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const monthlyData = [
+    { name: 'Jan', revenue: 4000, orders: 240 },
+    { name: 'Feb', revenue: 3000, orders: 198 },
+    { name: 'Mar', revenue: 5000, orders: 300 },
+    { name: 'Apr', revenue: 4500, orders: 270 },
+    { name: 'May', revenue: 6000, orders: 360 },
+    { name: 'Jun', revenue: 5500, orders: 330 },
+  ];
 
   useEffect(() => {
     fetchData();
@@ -193,6 +207,54 @@ export default function  AdminDashboard() {
               Next
             </button>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <StatCard title="Total Revenue" value="$24,000" icon={<DollarSign className="h-8 w-8 text-green-500" />} />
+        <StatCard title="Orders" value="1,698" icon={<ShoppingBag className="h-8 w-8 text-blue-500" />} />
+        <StatCard title="Avg. Order Value" value="$142" icon={<TrendingUp className="h-8 w-8 text-yellow-500" />} />
+        <StatCard title="Products Sold" value="1,234" icon={<Package className="h-8 w-8 text-purple-500" />} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Monthly Revenue & Orders</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={monthlyData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+              <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+              <Tooltip />
+              <Legend />
+              <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name="Revenue ($)" />
+              <Bar yAxisId="right" dataKey="orders" fill="#82ca9d" name="Orders" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Inbox</h2>
+          <Inbox />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Latest Orders</h2>
+          <LatestOrders />
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Latest Transactions</h2>
+          <LatestTransactions />
+        </div>
+      </div>
+
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold mb-4">New Order Form</h2>
+        <OrderForm />
+      </div>
+
+
+
         </div>
       ) : (
         <p>You do not have permission to view this page.</p>

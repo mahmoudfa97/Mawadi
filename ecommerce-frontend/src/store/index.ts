@@ -11,11 +11,10 @@ import apiReducer from './slices/apiSlice'; // Import the API reducer
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['products, user'],
+  whitelist: ['products', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, productReducer);
-const persistedReduceruser = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +22,7 @@ export const store = configureStore({
     utils: utilsSlice,
     checkout: checkoutReducer,
     products: persistedReducer,
-    user: persistedReduceruser, 
+    user: userReducer, 
     api: apiReducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -2,20 +2,38 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The following versions of our project are currently supported with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+### Frontend
+
+| Version    | Supported          |
+|------------|--------------------|
+| 0.1.0      | ✅ Supported       |
+| < 0.1.0    | ❌ Not Supported   |
+
+### Backend
+
+| Version    | Supported          |
+|------------|--------------------|
+| 1.0.0      | ✅ Supported       |
+| < 1.0.0    | ❌ Not Supported   |
+
+### Policy
+
+- **Frontend**: Minor versions and patches within the `0.x` series are supported until a `1.x` release. Support for a given version will end **3 months** after a newer version is released.
+- **Backend**: Major versions (e.g., `1.x.x`) receive security updates until the next major release. Patches are issued for critical vulnerabilities.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability, please report it responsibly by following these steps:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+1. **Contact Us**: Email us at `[leedor97@gmail.com]` with the subject line: `Security Vulnerability Report`.
+2. **Details**: Include a description of the issue, steps to reproduce it, and any potential impact.
+3. **Timely Response**: We will acknowledge your report within **48 hours** and provide a resolution timeline.
+
+## Notes
+
+- Vulnerabilities should not be shared publicly until we release a patch or a workaround.
+- Security updates are announced through [GitHub](https://github.com/mahmoudfa97/Mawadi) and email updates to subscribers.
+
+Thank you for contributing to the security of our project!

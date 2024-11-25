@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Tabs, Tab } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { RecaptchaVerifier } from 'firebase/auth';
+import { auth } from '../firebase';
+
 interface LoginProps {
-  handleClose?: () => void
+  handleClose?: () => void;
 }
+
 const Login = (props: LoginProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [email, setEmail] = useState('');
@@ -15,6 +19,8 @@ const Login = (props: LoginProps) => {
   const [isVerifying, setIsVerifying] = useState(false);
   const { loginWithEmail, loginWithPhone, verifyPhoneCode } = useAuth();
   const navigate = useNavigate();
+  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+  const appVerifierRef = useRef<RecaptchaVerifier | null>(null);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
@@ -33,36 +39,62 @@ const Login = (props: LoginProps) => {
 
   const handlePhoneLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await loginWithPhone(phoneNumber);
-      setIsVerifying(true);
-    } catch (err) {
-      setError('Invalid phone number');
-      setIsVerifying(false);
 
-    }
+if (!recaptchaContainerRef.current) {
+  setError('reCAPTCHA container is missing.');
+  return;
+}
+
+try {
+  if (appVerifierRef.current) {
+    console.log('Clearing existing reCAPTCHA instance...');
+    appVerifierRef.current.clear();
+  }
+
+  console.log('Initializing reCAPTCHA...');
+  appVerifierRef.current = new RecaptchaVerifier(
+    auth,
+    recaptchaContainerRef.current,
+    { size: 'invisible' }
+  );
+
+  console.log('Starting phone login...');
+  await loginWithPhone(phoneNumber, appVerifierRef.current);
+  setIsVerifying(true);
+} catch (err) {
+  console.error('Error during phone login:', err);
+  setError('Something went wrong. Please try again.');
+  setIsVerifying(false);
+
+  if (appVerifierRef.current) {
+    appVerifierRef.current.clear();
+    appVerifierRef.current = null;
+  }
+}
   };
 
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await verifyPhoneCode(verificationCode);
-      props.handleClose? props.handleClose() : navigate('/admin')
+      props.handleClose ? props.handleClose() : navigate('/admin');
     } catch (err) {
       setError('Invalid verification code');
     }
   };
+
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value;
-    
+
     // If the phone number starts with "0" and has no country code
     if (input.startsWith('0') && !input.startsWith('+')) {
-      // Replace "0" with country code, e.g., "+1"
+      // Replace "0" with country code, e.g., "+972"
       input = '+972' + input.slice(1);
     }
 
     setPhoneNumber(input);
   };
+
   return (
     <Box sx={{ maxWidth: 300, margin: 'auto', mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -130,7 +162,8 @@ const Login = (props: LoginProps) => {
           </Button>
         </Box>
       )}
-      <div id="recaptcha-container"></div>
+      {/* Use the ref to access the reCAPTCHA container */}
+      <div ref={recaptchaContainerRef} id="recaptcha-container"></div>
     </Box>
   );
 };

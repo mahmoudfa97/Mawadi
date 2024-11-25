@@ -38,7 +38,7 @@ const CartSideBar: React.FC<CartProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
   const moveToCheckout = () => {
-    navigate('/checkout')
+    navigate('/cart')
     onClose();
 
   }

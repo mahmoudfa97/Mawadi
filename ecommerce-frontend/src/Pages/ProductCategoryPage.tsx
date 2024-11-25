@@ -6,6 +6,7 @@ import { addToCart } from "../store/slices/cartSlice";
 import { fetchProducts } from "../store/slices/productsSlice";
 import { IProduct, IOccasions, ICategories } from "../types/Constants";
 import ProductCard from "../components/ProductCard/ProductCard";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 
 const ProductCategoryPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
@@ -16,7 +17,11 @@ const ProductCategoryPage: React.FC = () => {
   const [sortBy, setSortBy] = useState("ترتيب حسب");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
-
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({});
+  const toggleSection = (section: string) => {
+    setOpenSection(prevSection => (prevSection === section ? null : section));
+  };
   useEffect(() => {
     setActiveCategory(category || "الجميع");
   }, [category]);
@@ -27,10 +32,26 @@ const ProductCategoryPage: React.FC = () => {
     "الكيك", "المباخر", "المزهريات", "الورود", "زوارة", "كل الاكسسوارات", "كل الورود",
     "كل منتجات الزوارة", "كل منتجات المنزل", "مجموعة هدايا", "موزعات العطور", "هدايا مناسبة"
   ], []);
-
+  const additionalFiltersList = useMemo(() => ["السعر", "اللون", "الحجم", "العلامة التجارية"], []);
+  const sortByList = useMemo(() => ["الأحدث", "الأكثر شهرة", "الأعلى تقييمًا"], []);
   const filteredProducts = useMemo(() => {
     return activeCategory === "الجميع" ? products : products.filter((product) => product.category === activeCategory);
   }, [products, activeCategory]);
+
+  const handleCheckboxChange = (filterKey: string, value: string) => {
+    setSelectedFilters((prev) => {
+      const updatedFilters = { ...prev };
+      if (!updatedFilters[filterKey]) {
+        updatedFilters[filterKey] = [];
+      }
+      if (updatedFilters[filterKey].includes(value)) {
+        updatedFilters[filterKey] = updatedFilters[filterKey].filter((item) => item !== value);
+      } else {
+        updatedFilters[filterKey].push(value);
+      }
+      return updatedFilters;
+    });
+  };
 
   const sortedProducts = useMemo(() => {
     return [...filteredProducts].sort((a, b) => {
@@ -57,7 +78,47 @@ const ProductCategoryPage: React.FC = () => {
     setCurrentPage(1);
     navigate(`/productlisting/${newCategory}`);
   };
+  const renderAccordionSection = (title: string, items: string[], sectionKey: string) => (
+    <div className="accordion-section">
+      {/* Accordion Header */}
+      <div
+        className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer"
+        onClick={() => toggleSection(sectionKey)}
+      >
+        <div className="flex justify-between px-4 py-3 gap-2 items-center">
+          <h2 className="text-base font-customBold text-[#434343]">{title}</h2>
+          <ChevronDown
+            className={`w-3 transition-transform duration-300 ${
+              openSection === sectionKey ? "rotate-180" : ""
+            }`}
+          />
+        </div>
+      </div>
 
+      {/* Accordion Body */}
+      <div
+        className={`overflow-hidden transition-max-height duration-300 ${
+          openSection === sectionKey ? "max-h-[500px]" : "max-h-0"
+        }`}
+      >
+        <ul className="px-4 mt-3">
+         {items.map((item, index) => (
+            <li key={`checkbox${index}`} className="py-2 px-3 text-sm font-customBold text-[#434343] cursor-pointer hover:bg-[#F0F0F0] rounded">
+              <input
+                type="checkbox"
+                id={`${sectionKey}-${item}`}
+                checked={selectedFilters[sectionKey]?.includes(item) || false}
+                onChange={() => handleCheckboxChange(sectionKey, item)}
+              />
+              <label htmlFor={`${sectionKey}-${item}`} className="text-sm font-bold text-[#434343]">
+                {item}
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
   if (loading) {
     return <div className="text-center py-8">جاري التحميل...</div>;
   }
@@ -97,11 +158,7 @@ const ProductCategoryPage: React.FC = () => {
       </div>
       <div className="px-6 hidden lg:block">
         <div className="hidden lg:block sm:w-[96%] xl:w-[92%] mx-auto px-4 md:px-10 py-2 bg-[#F8F8F8]">
-          <ul className="flex gap-2 items-center">
-            <li><Link to="/" className="text-xs text-black capitalize font-customLight text-wrap-name">بيت</Link></li>
-            <li><span className="text-black text-xs font-customLight text-wrap-name">/</span></li>
-            <li><span className="text-black text-xs text-wrap-name capitalize font-customBold">{activeCategory}</span></li>
-          </ul>
+          <Breadcrumb selectedPage={activeCategory} />
         </div>
       </div>
       <div className="2xl:px-40 lg:px-14 xl:px-20 px-5 pb-5 lg:pb-12 lg:py-12">
@@ -133,76 +190,21 @@ const ProductCategoryPage: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="w-full ease-in-out duration-500 fixed bottom-0 start-0 h-full bg-white z-[2000] overflow-y-auto lg:overflow-hidden p-4 lg:h-[unset] lg:p-[unset] lg:z-[unset] lg:bg-[unset] lg:static ltr:translate-y-full rtl:translate-y-full lg:ltr:translate-y-0 lg:rtl:translate-y-0">
-            <div className="flex flex-col gap-5 lg:gap-0">
-              <div className="flex justify-between border-b border-[#F6F6F6] items-center pb-4 gap-4 w-full lg:hidden">
-                <span className="text-xl font-customBold text-black">تصفية وفرز</span>
-                <img src="/assets/icon/close.svg" alt="" className="size-4" />
-              </div>
-              <div className="pb-5 border-b border-[#E4E4E4]">
-                <div className="bg-[#F8F8F8] rounded-2xl cursor-pointer">
-                  <div className="flex py-3 px-4 justify-between gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">ترتيب حسب</h2>
-                    <p className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer">
-                  <div className="flex justify-between px-4 py-3 gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">الأقسام</h2>
-                    <span className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer">
-                  <div className="flex justify-between px-4 py-3 gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">مناسبات</h2>
-                    <span className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer">
-                  <div className="flex justify-between px-4 py-3 gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">الفئات العمرية</h2>
-                    <span className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer">
-                  <div className="flex justify-between px-4 py-3 gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">الجنس</h2>
-                    <span className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="bg-[#F8F8F8] lg:bg-white lg:border-b border-[#E4E4E4] rounded-2xl lg:rounded-none cursor-pointer">
-                  <div className="flex justify-between px-4 py-3 gap-2 items-center">
-                    <h2 className="text-base font-customBold text-[#434343]">العلامات التجارية</h2>
-                    <span className="cursor-pointer">
-                      <ChevronDown className="w-3 transition ease-out duration-700" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-         
-           
-          </div>
+       <div className="w-full ease-in-out duration-500 fixed bottom-0 start-0 h-full bg-white z-[2000] overflow-y-auto lg:overflow-hidden p-4 lg:h-[unset] lg:p-[unset] lg:z-[unset] lg:bg-[unset] lg:static ltr:translate-y-full rtl:translate-y-full lg:ltr:translate-y-0 lg:rtl:translate-y-0">
+      <div className="flex flex-col gap-5 lg:gap-0">
+        {/* Top Header for Mobile */}
+        <div className="flex justify-between border-b border-[#F6F6F6] items-center pb-4 gap-4 w-full lg:hidden">
+          <span className="text-xl font-customBold text-black">تصفية وفرز</span>
+          <img src="/assets/icon/close.svg" alt="Close" className="size-4" />
+        </div>
+
+        {/* Accordion Sections */}
+        {renderAccordionSection("ترتيب حسب", sortByList, "sortBy")}
+        {renderAccordionSection("الأقسام", categories, "categories")}
+        {renderAccordionSection("الفلاتر الإضافية", additionalFiltersList, "filters")}
+        {renderAccordionSection("الفلاتر الإضافية", additionalFiltersList, "filters")}
+      </div>
+    </div>
        
         </div>
       </div>

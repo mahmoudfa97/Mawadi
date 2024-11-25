@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, MutableRefObject } from 'react';
 import axios from 'axios';
-import { signInWithPhoneNumber, User as FirebaseUser, RecaptchaVerifier } from 'firebase/auth';
+import { signInWithPhoneNumber, User as FirebaseUser, RecaptchaVerifier, getAuth } from 'firebase/auth';
 import { auth } from '../firebase';
 import { post, get } from '../services/api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -8,11 +8,10 @@ import { addApiCall } from '../store/slices/apiSlice';
 import { setUser } from '../store/slices/userSlice';
 import { IUser } from '../types/User';
 
-
 interface AuthContextType {
   loadedUser: IUser | null;
   loginWithEmail: (email: string, password: string) => Promise<void>;
-  loginWithPhone: (phoneNumber: string) => Promise<void>;
+  loginWithPhone: (phoneNumber: string, verifier: RecaptchaVerifier) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
   logout: () => void;
   register: (firstName: string, lastName: string, email: string, password: string, phoneNumber: string) => Promise<void>;
@@ -30,7 +29,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const loadedUser = useAppSelector((state) => state.user.user);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const dispatch = useAppDispatch();
-  let appVerifier: RecaptchaVerifier | null = null;
+   let appVerifier: RecaptchaVerifier | null = null;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -40,20 +39,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     } else {
       setIsLoading(false);
     }
-  }, []);
 
-  useEffect(() => {
-
-  }, [loadedUser]);
-  const setAuthToken = (token: string | null) => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      delete axios.defaults.headers.common['Authorization'];
-    }
-  };
-
-  useEffect(() => {
+    // Cleanup the reCAPTCHA when the component unmounts
     return () => {
       if (appVerifier) {
         appVerifier.clear();
@@ -62,13 +49,21 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
+  const setAuthToken = (token: string | null) => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  };
+
   const fetchUser = async (uid?: string) => {
     try {
       if(uid){
         const res = await get<IUser>('users/profile', { uid })
         setUser(res.data);
-        dispatch(addApiCall({user: res.data}))
-        dispatch(setUser(res.data))
+        dispatch(addApiCall({user: res.data}));
+        dispatch(setUser(res.data));
       }
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -90,26 +85,19 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       throw error;
     }
   };
-
-  const loginWithPhone = async (phoneNumber: string) => {
+ 
+  const loginWithPhone = async (phoneNumber: string, verifier: RecaptchaVerifier) => {
     try {
-
-      appVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-        size: 'invisible',
-      });
-  
-      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, verifier);
       setConfirmationResult(confirmation);
     } catch (error) {
       console.error('Phone login error:', error);
-      if (appVerifier) {
-        appVerifier.clear(); 
-        appVerifier = null;
+      if (verifier) {
+        verifier.clear();
       }
       throw error;
     }
   };
-
   const verifyPhoneCode = async (code: string) => {
     if (!confirmationResult) {
       throw new Error('No confirmation result found');

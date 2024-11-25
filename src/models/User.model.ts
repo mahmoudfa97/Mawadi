@@ -24,8 +24,8 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  dateOfBirth: Date;
-  gender: 'male' | 'female' | 'other' | 'prefer not to say';
+  dateOfBirth?: Date;
+  gender?: 'Select Value' | 'Male' | 'Female' | 'Other' | ' Prefer not to say';
   addresses: IAddress[];
   orders: mongoose.Types.ObjectId[];
   wishlist: mongoose.Types.ObjectId[];

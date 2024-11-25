@@ -27,7 +27,7 @@ The following versions of our project are currently supported with security upda
 
 If you discover a security vulnerability, please report it responsibly by following these steps:
 
-1. **Contact Us**: Email us at `[leedor97@gmail.com]` with the subject line: `Security Vulnerability Report`.
+1. **Contact Us**: Email us at `leedor97@gmail.com` with the subject line: `Security Vulnerability Report`.
 2. **Details**: Include a description of the issue, steps to reproduce it, and any potential impact.
 3. **Timely Response**: We will acknowledge your report within **48 hours** and provide a resolution timeline.
 

@@ -9,6 +9,7 @@ const productsdumb = [
     "category": "Fragrances",
     "description": "A premium collection of luxurious perfumes perfect for any occasion.",
     "price": 120.99,
+    "tax": 120.99,
     "currency": "ILS",
     "image": "luxury_fragrance.jpg",
     "additionalImages": [
@@ -41,6 +42,8 @@ const productsdumb = [
   {
     "id": 2,
     "name": "Gourmet Food Hamper",
+    "tax": 120.99,
+
     "brand": "Deluxe Treats",
     "category": "Gourmet Hampers",
     "description": "An exquisite selection of gourmet treats including chocolates, nuts, and fine wines.",
@@ -82,6 +85,8 @@ const productsdumb = [
     "description": "A stunning diamond necklace to add a touch of elegance to any special moment.",
     "price": 499.99,
     "rating": 3,
+    "tax": 120.99,
+
     "currency": "ILS",
     "image": "diamond_necklace.jpg",
     "additionalImages": [
@@ -119,6 +124,8 @@ const productsdumb = [
     "price": 150.00,
     "rating": 3,
     "currency": "ILS",
+    "tax": 120.99,
+
     "image": "spa_experience.jpg",
     "additionalImages": [
       "spa_experience_1.jpg",
@@ -151,6 +158,8 @@ const productsdumb = [
     "name": "Customized Mug with Video Message",
     "brand": "Personal Touch",
     "category": "Personalized Gifts",
+    "tax": 120.99,
+
     "description": "A personalized mug with a custom design and a unique video message to show you care.",
     "price": 19.99,
     "rating": 3,

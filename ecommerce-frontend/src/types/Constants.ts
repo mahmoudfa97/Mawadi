@@ -11,6 +11,9 @@ export interface IProduct {
   rating: number;
   image: string;
   additionalImages: string[];
+  color:string;
+  tax:number;
+  size:string;
   tags: string[];
   occasion: string[];
   personalization: {

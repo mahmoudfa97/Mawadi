@@ -1,132 +1,155 @@
-import React from "react";
-import {  Minus, Plus } from "lucide-react";
-import { removeFromCart, incrementQuantity, decrementQuantity, updatePersonalization } from "../store/slices/cartSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { Link } from "react-router-dom";
-import CartHeader from "./cart/header";
+"use client"
+
+import { Minus, Plus } from 'lucide-react'
+
+import { useState } from "react"
+import { Input } from '../components/UI/Input'
+import { Button } from '../components/UI/button'
+import { useAppSelector } from '../store/hooks'
 import { CartItem } from "../types/Constants";
+import { useNavigate } from 'react-router-dom'
 
-const CartPage: React.FC = () => {
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const dispatch = useAppDispatch();
-  const handlePersonalizationChange = (itemId: string, videoFile?: File, customMessage?: string) => {
-    dispatch(updatePersonalization({ isEnabled: true, itemId, videoFile, customMessage }));
-  };
-  const totalPrice = cartItems.reduce((total, item) => total + Number(item.price) * item.quantity, 0);
-  const actions = ["تقسيمة الدفع", "رسالة تقدير", "إضافة بطاقة"];
+export default function CartPage() {
+  const cartItemss = useAppSelector((state: { cart: { items: any; }; }) => state.cart.items);
+  const [cartItems, setCartItems] = useState<CartItem[]>(cartItemss)
+  const navigate = useNavigate()
+  const updateQuantity = (id: number, increment: boolean) => {
+    setCartItems(items =>
+      items.map(item =>
+        item.id === id
+          ? { ...item, quantity: increment ? item.quantity + 1 : Math.max(1, item.quantity - 1) }
+          : item
+      )
+    )
+  }
+
+  const handleMoveToCheckout = () => navigate('/checkout')
+    
+  const removeItem = (id: number) => {
+    setCartItems(items => items.filter(item => item.id !== id))
+  }
+
+  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  const discount = 60.00
+  const deliveryCharge = 0.00
+  const estimatedTax = 20.00
+  const total = subtotal - discount + deliveryCharge + estimatedTax
+
   return (
-    <div>
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <CartHeader />
-        <div className="grid grid-cols-1 visible-animation lg:grid-cols-5 xl:grid-cols-3 gap-6 sm:gap-10 ng-star-inserted">
-          {/* Cart Items */}
-          <div className="lg:col-span-3 xl:col-span-2 flex flex-col gap-5">
-            {cartItems.length === 0 ? (
-              <p>سلة التسوق فارغة</p>
-            ) : (
-              <>
-                {cartItems.map((item: CartItem) => (
-                  <div key={item.id} className="w-full grid grid-cols-6 sm:grid-cols-8 xl:grid-cols-7 gap-4 sm:gap-5 border-b pb-4 sm:pb-5 border-[#E4E4E4] ng-star-inserted">
-                    <div className="col-span-2 xl:col-span-1 flex justify-start items-center">
-                      <img src={item.image} alt={item.image} className="product border aspect-square object-cover border-borderColor bg-[#F8F8F8] rounded-md" />
-                    </div>
+    <div className="p-6">
+      <div className="flex justify-between items-center bg-orange-500 text-white p-4 rounded-lg mb-6">
+        <p>There are {cartItems.length} products in your cart</p>
+        <button className="hover:underline">Clear cart</button>
+      </div>
 
-                    <div className="col-span-4 sm:col-span-6 gap-4 sm:gap-5 sm:gap-y-3 grid-cols-subgrid flex flex-col justify-between h-full">
-                      <div className="grid grid-cols-2 xl:grid-cols-3 gap-2">
-                        <div className="flex col-span-2 sm:col-span-1 justify-between gap-2 items-center">
-                          <h2 className="text-lg font-semibold">{item.name}</h2>
-                        </div>
-                        <div className="flex justify-start sm:justify-end">
-                          <div className="flex items-center mt-2 flex gap-1 w-fit">
-                            <button onClick={() => dispatch(decrementQuantity(item.id))} className="bg-gray-200 p-1 rounded-full">
-                              <Minus className="h-4 w-4" />
-                            </button>
-                            <span className="mx-2 text-lg">{item.quantity}</span> {/* Ensure this is correctly accessing the quantity */}
-                            <button onClick={() => dispatch(incrementQuantity(item.id))} className="bg-gray-200 p-1 rounded-full">
-                              <Plus className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </div>
-                        <div className="">
-                          <span className="text-xs sm:text-sm flex text-end justify-end sm:items-start sm:justify-start xl:text-end xl:justify-end font-customBold text-[#8A8A8A]">
-                            {Number(item.price).toFixed(2)} $
-                          </span>
-                        </div>
-                      </div>
-                       <div className="flex justify-between gap-5 items-end">
-                      <div className="flex flex-wrap gap-2 attribute items-center justify-start ng-star-inserted">
-                        <Link to="" className="text-sm flex gap-2 items-center font-customMedium text-[#8A8A8A] after:content-['|'] after:text-sm after:font-customMedium after:text-[#8A8A8A] ng-star-inserted"></Link>
-                      </div>
-                      <button onClick={() => dispatch(removeFromCart(`${item.id}`))} className="w-3 sm:w-4 cursor-pointer">
-                        حذف
-                      </button>
-                    </div>
-
-                {/* Personalization section */}
-                {item.personalization && (
-                  <div className="personalization">
-                    <h4>Personalization</h4>
-                    {item.personalization && (
-                      <div>
-                        <label>Attach a video message:</label>
-                        <input
-                          type="file"
-                          accept="video/*"
-                          onChange={(e) =>
-                            handlePersonalizationChange(`${item.id}`, e.target.files?.[0], item.personalization.customMessage)
-                          }
-                        />
-                        <label>Add a custom message:</label>
-                        <textarea
-                          value={item.personalization.customMessage}
-                          onChange={(e) =>
-                            handlePersonalizationChange(`${item.id}`, item.personalization.videoFile, e.target.value)
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-                    </div>
-
-                   
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-          <div className="flex flex-col lg:gap-5 lg:col-span-2 xl:col-span-1 h-fit bg-white w-full sticky top-4">
-            <div className="grid py-4 lg:p-4 lg:box-shadow lg:border bg-white lg:border-[#E4E4E4] rounded-md grid-cols-4 gap-2">
-              {actions.map((item, idx) => (
-                <div className="bg-[#F8F8F8] flex rounded-md cursor-pointer justify-center items-center py-2.5 flex-col gap-2">
-                  <img src="" className="w-5 lg:w-[22px]" alt="" />
-                  <p className="text-[8px] md:text-[10px] lg:text-[9px] 2xl:text-[10px] font-customBold text-black text-center">{item}</p>
-                </div>
-              ))}
-            </div>
-            <div className="lg:shadow-lg lg:border bg-white lg:border-[#E4E4E4] box-shadow pb-4 lg:p-5 rounded-md">
-              <div className="lg:shadow-lg lg:border bg-white lg:border-[#E4E4E4] box-shadow pb-4 lg:p-5 rounded-md">
-                <>
-                  <h2 className="font-customBold hidden lg:block text-lg sm:text-xl text-black capitalize pb-5">ملخص الطلب</h2>
-                  <div className="flex flex-col gap-3 lg:gap-2 pb-4 lg:pb-5">
-                    <div className="flex justify-between items-center bg-[#F8F8F8] rounded-md px-4 py-2.5 lg:px-0 lg:py-0 lg:bg-transparent"></div>
-                    <span className="text-xs sm:text-base text-black font-customSemiBold capitalize">المجموع الفرعي</span>
-                    <span className="text-black font-customBold text-xs sm:text-base">{totalPrice.toFixed(2)} شيكل</span>
-                  </div>
-
-                  <div className="">
-                    <Link to="/checkout">
-                      <button className="w-full bg-purple-700 text-white py-3 rounded-lg mt-4">متابعة الدفع</button>
-                    </Link>
-                  </div>
-                </>
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          {cartItems.map((item) => (
+            <div key={item.id} className="flex gap-6 pb-6 border-b">
+              <div className="w-24 h-24 relative">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="object-cover rounded-lg"
+                />
               </div>
+              <div className="flex-grow">
+                <h3 className="font-medium">{item.name}</h3>
+                <div className="text-sm text-gray-600 mt-1">
+                  Color: {item.color} | Size: {item.size}
+                </div>
+                <div className="flex items-center gap-4 mt-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => updateQuantity(item.id, false)}
+                      className="p-1 rounded-full hover:bg-gray-100"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </button>
+                    <span className="w-8 text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, true)}
+                      className="p-1 rounded-full hover:bg-gray-100"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Remove
+                  </button>
+                  <button className="text-sm text-gray-500 hover:text-gray-700">
+                    Add to Wishlist
+                  </button>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-medium">{`${item.price?.toFixed(2)}`}</p>
+                <p className="text-sm text-gray-500">{`+${item.tax?.toFixed(2)} Tax`}</p>
+                <p className="text-sm font-medium mt-2">
+                  {`Total: ${((item?.price + item?.tax) * item?.quantity)?.toFixed(2)}`}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-white p-6 rounded-lg h-fit">
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Have a Promo Code?</h3>
+            <div className="flex gap-2">
+              <Input placeholder="CODE123" />
+              <Button variant="outline">Apply</Button>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="font-medium">Order Summary</h3>
+            
+            <div className="flex justify-between text-sm">
+              <span>Sub Total:</span>
+              <span>${subtotal?.toFixed(2)}</span>
+            </div>
+            
+            <div className="flex justify-between text-sm text-red-600">
+              <span>Discount:</span>
+              <span>-${discount?.toFixed(2)}</span>
+            </div>
+            
+            <div className="flex justify-between text-sm">
+              <span>Delivery Charge:</span>
+              <span>${deliveryCharge?.toFixed(2)}</span>
+            </div>
+            
+            <div className="flex justify-between text-sm">
+              <span>Estimated Tax (15.5%):</span>
+              <span>${estimatedTax?.toFixed(2)}</span>
+            </div>
+            
+            <div className="border-t pt-4 mt-4">
+              <div className="flex justify-between font-medium">
+                <span>Total Amount:</span>
+                <span>${total?.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div className="bg-orange-50 p-3 rounded-md text-sm flex items-center gap-2">
+              <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+              icon for shipping
+              </span>
+              Estimated Delivery by 25 April, 2024
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mt-6">
+              <Button variant="outline">Continue Shopping</Button>
+              <Button className="bg-green-500 hover:bg-green-600" onClick={ handleMoveToCheckout}>Buy Now</Button>
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartPage;

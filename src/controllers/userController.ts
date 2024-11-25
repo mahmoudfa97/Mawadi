@@ -148,25 +148,56 @@ export const getUserProfile = async (req: Request, res: Response) => {
   }
 };
 
+
 export const updateUserProfile = async (req: Request, res: Response) => {
   try {
-    const { firstName, lastName, phoneNumber } = req.body;
-
-    const user = await User.findById(req.body.user?.id);
-    if (!user) {
-        res.status(404).json({ message: 'User not found' });
+    const { userId } = req.query
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized access" });
       return 
     }
 
-    user.firstName = firstName || user.firstName;
-    user.lastName = lastName || user.lastName;
-    user.phoneNumber = phoneNumber || user.phoneNumber;
+    const {
+      firstName,
+      lastName,
+      email,
+      birthday,
+      gender,
+      avatar,
+      giftPreferences,
+    } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return
+    }
+
+    user.firstName = firstName?.trim() || user.firstName;
+    user.lastName = lastName?.trim() || user.lastName;
+    user.email = email?.trim() || user.email;
+    user.dateOfBirth = birthday || user.dateOfBirth; 
+    user.gender = gender || user.gender; 
+    user.giftPreferences = giftPreferences || user.giftPreferences; 
 
     await user.save();
 
-    res.status(200).json({ message: 'Profile updated successfully', user });
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        birthday: user.dateOfBirth,
+        gender: user.gender,
+        giftPreferences: user.giftPreferences,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating user profile', error });
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Error updating user profile", error: error });
   }
 };
 

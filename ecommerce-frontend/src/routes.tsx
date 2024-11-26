@@ -24,6 +24,8 @@ import RegisterPage from "./Pages/RegisterPage";
 import Home from "./Pages/Home";
 import FAQ from "./Pages/Faq";
 import MawadiMagic from "./Pages/MawadiMagic";
+import AdminLayout from "./components/AdminPanel/AdminLayout";
+import ProductList from "./components/AdminPanel/components/ProductList";
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -37,6 +39,9 @@ const AppRoutes: React.FC = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/myprofile" element={<Profile />} />
     <Route path="/register" element={<RegisterPage />} />
+    <Route path="/admin/products" element={<AdminRoute>
+          <AdminLayout> <ProductList/></AdminLayout>
+        </AdminRoute>} />
     <Route
       path="/admin"
       element={
@@ -46,7 +51,7 @@ const AppRoutes: React.FC = () => (
       }
     >
       <Route index element={<AdminPanel />} />
-      <Route path="products" element={<ManageProducts />} />
+     
       <Route path="users" element={<ManageUsers />} />
       <Route path="orders" element={<ManageOrders />} />
     </Route>

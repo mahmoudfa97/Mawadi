@@ -289,3 +289,5 @@
 {"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-26T00:16:09.989Z"}
 {"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-26T00:16:46.570Z"}
 {"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-26T00:16:48.088Z"}
+{"level":"info","message":"Server running on http://localhost:5000","service":"mawada-api","timestamp":"2024-11-26T00:17:07.988Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"mawada-api","timestamp":"2024-11-26T00:17:09.553Z"}

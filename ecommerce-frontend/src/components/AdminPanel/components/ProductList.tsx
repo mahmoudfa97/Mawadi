@@ -10,6 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "../../UI/DropdownMenu"
 import { Button } from "../../UI/button"
+import { useAppSelector } from '../../../store/hooks'
+import { Modal } from '../../ModalComponent/Modal'
+import CreateProduct from './CreateProduct'
 
 interface Product {
   id: string
@@ -26,47 +29,21 @@ interface Product {
   image: string
 }
 
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Black T-shirt',
-    sizes: ['M', 'L', 'XL'],
-    price: 80.00,
-    stock: {
-      left: 486,
-      sold: 155
-    },
-    category: 'Fashion',
-    rating: 4.3,
-    reviews: 55,
-    image: '/placeholder.svg?height=80&width=80'
-  },
-  {
-    id: '2',
-    name: 'Olive Green Leather Bag',
-    sizes: ['S', 'M'],
-    price: 138.00,
-    stock: {
-      left: 784,
-      sold: 674
-    },
-    category: 'Hand Bag',
-    rating: 4.1,
-    reviews: 143,
-    image: '/placeholder.svg?height=80&width=80'
-  },
-  // Add more mock products as needed
-]
+
 
 export default function ProductList() {
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(1)
+  const { products, whatsNewProducts, specialProducts, popularItems, loading, error  } = useAppSelector((state) => state.products);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
   const toggleSelectAll = () => {
-    if (selectedItems.length === mockProducts.length) {
+    if (selectedItems.length === products.length) {
       setSelectedItems([])
     } else {
-      setSelectedItems(mockProducts.map(product => product.id))
+      setSelectedItems(products.map(product => `${product.id}`))
     }
   }
 
@@ -90,8 +67,8 @@ export default function ProductList() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-6">
+    <div className="bg-white rounded-lg shadow container mx-auto px-4 py-8 mt-10">
+      <div className="">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">All Product List</h2>
           <div className="flex items-center space-x-4">
@@ -117,7 +94,7 @@ export default function ProductList() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button>
+            <Button onClick={openModal}>
               <Plus className="mr-2 h-4 w-4" />
               Add Product
             </Button>
@@ -131,7 +108,7 @@ export default function ProductList() {
                 <th className="px-6 py-3 text-left">
                   <input
                     type="checkbox"
-                    checked={selectedItems.length === mockProducts.length}
+                    checked={selectedItems.length === products.length}
                     onChange={toggleSelectAll}
                     className="rounded border-gray-300 text-blue-500 focus:ring-blue-500"
                   />
@@ -157,13 +134,13 @@ export default function ProductList() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {mockProducts.map((product) => (
+              {products.map((product) => (
                 <tr key={product.id}>
                   <td className="px-6 py-4">
                     <input
                       type="checkbox"
-                      checked={selectedItems.includes(product.id)}
-                      onChange={() => toggleSelectItem(product.id)}
+                      checked={selectedItems.includes(`${product.id}`)}
+                      onChange={() => toggleSelectItem(`${product.id}`)}
                       className="rounded border-gray-300 text-blue-500 focus:ring-blue-500"
                     />
                   </td>
@@ -177,7 +154,7 @@ export default function ProductList() {
                       <div className="ml-4">
                         <div className="font-medium text-gray-900">{product.name}</div>
                         <div className="text-sm text-gray-500">
-                          Size: {product.sizes.join(', ')}
+                          Size: {product.size?.join(', ')}
                         </div>
                       </div>
                     </div>
@@ -187,8 +164,8 @@ export default function ProductList() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm">
-                      <div className="text-gray-900">{product.stock.left} Item Left</div>
-                      <div className="text-gray-500">{product.stock.sold} Sold</div>
+                      <div className="text-gray-900">{product.inStock.left} Item Left</div>
+                      <div className="text-gray-500">{product.inStock.sold} Sold</div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -225,7 +202,7 @@ export default function ProductList() {
 
         <div className="flex items-center justify-between mt-6">
           <div className="text-sm text-gray-500">
-            Showing {mockProducts.length} of {mockProducts.length} products
+            Showing {products.length} of {products.length} products
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -259,6 +236,9 @@ export default function ProductList() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <CreateProduct />
+      </Modal>
     </div>
   )
 }

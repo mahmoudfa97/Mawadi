@@ -10,6 +10,7 @@ const productsdumb = [
     "description": "A premium collection of luxurious perfumes perfect for any occasion.",
     "price": 120.99,
     "tax": 120.99,
+    "reviews": 120,
     "currency": "ILS",
     "image": "luxury_fragrance.jpg",
     "additionalImages": [
@@ -49,6 +50,8 @@ const productsdumb = [
     "description": "An exquisite selection of gourmet treats including chocolates, nuts, and fine wines.",
     "price": 89.99,
     "currency": "ILS",
+    "reviews": 120,
+
     "image": "gourmet_hamper.jpg",
     "additionalImages": [
       "gourmet_hamper_1.jpg",
@@ -86,6 +89,7 @@ const productsdumb = [
     "price": 499.99,
     "rating": 3,
     "tax": 120.99,
+    "reviews": 120,
 
     "currency": "ILS",
     "image": "diamond_necklace.jpg",
@@ -125,6 +129,7 @@ const productsdumb = [
     "rating": 3,
     "currency": "ILS",
     "tax": 120.99,
+    "reviews": 120,
 
     "image": "spa_experience.jpg",
     "additionalImages": [
@@ -159,6 +164,7 @@ const productsdumb = [
     "brand": "Personal Touch",
     "category": "Personalized Gifts",
     "tax": 120.99,
+    "reviews": 120,
 
     "description": "A personalized mug with a custom design and a unique video message to show you care.",
     "price": 19.99,
@@ -208,6 +214,8 @@ const productsdumb = [
     "occasion": ["Housewarming", "Anniversary"],
     "personalization": false,
     "inStock": true,
+    "reviews": 120,
+
     "type": "Decor",
     "SKU": 70418,
     "productCode": "HCV-006",
@@ -233,6 +241,8 @@ const productsdumb = [
     "description": "High-quality wireless earbuds with noise-cancellation and long battery life.",
     "price": 79.99,
     "currency": "ILS",
+    "reviews": 120,
+
     "image": "wireless_earbuds.jpg",
     "additionalImages": [
       "wireless_earbuds_1.jpg",
@@ -267,6 +277,8 @@ const productsdumb = [
     "description": "A natural skincare set including cleanser, moisturizer, and serum.",
     "price": 99.99,
     "currency": "ILS",
+    "reviews": 120,
+
     "image": "skincare_set.jpg",
     "additionalImages": [
       "skincare_set_1.jpg",
@@ -297,6 +309,8 @@ const productsdumb = [
     "id": 9,
     "name": "Portable Power Bank",
     "brand": "ChargeTech",
+    "reviews": 120,
+
     "category": "Electronics",
     "description": "Compact and powerful power bank to charge devices on the go.",
     "price": 29.99,

@@ -183,7 +183,7 @@ const MawadiMagic: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 p-4 md:p-8 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen p-4 md:p-8 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
       <Card className="w-full max-w-4xl mx-auto bg-gradient-to-br from-purple-500/50 to-blue-500/50 backdrop-blur-lg text-white border-none shadow-xl">
         <CardHeader className="flex flex-row justify-between items-center">
           <div>

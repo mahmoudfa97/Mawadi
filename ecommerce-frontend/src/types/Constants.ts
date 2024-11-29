@@ -11,9 +11,9 @@ export interface IProduct {
   rating: number;
   image: string;
   additionalImages: string[];
-  color:string;
+  colors:string[];
   tax:number;
-  size:string;
+  size:string[];
   tags: string[];
   occasion: string[];
   personalization: {
@@ -22,8 +22,12 @@ export interface IProduct {
   };
   type: string;
   SKU: number;
-  inStock: boolean
+  inStock: {
+    left: number;
+    sold: number;
+  }
   productCode: string;
+  reviews: number;
   salesCount: number;
   dateAdded: string;
   deliveryTime: string;

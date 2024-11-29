@@ -39,23 +39,7 @@ const AppRoutes: React.FC = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/myprofile" element={<Profile />} />
     <Route path="/register" element={<RegisterPage />} />
-    <Route path="/admin/products" element={<AdminRoute>
-          <AdminLayout> <ProductList/></AdminLayout>
-        </AdminRoute>} />
-    <Route
-      path="/admin"
-      element={
-        <AdminRoute>
-          <AdminDashboard />
-        </AdminRoute>
-      }
-    >
-      <Route index element={<AdminPanel />} />
-     
-      <Route path="users" element={<ManageUsers />} />
-      <Route path="orders" element={<ManageOrders />} />
-    </Route>
-    {/* Catch-all Redirect to Home */}
+0       {/* Catch-all Redirect to Home */}
     <Route path="/categories" element={<CategoriesPage />} />
     <Route path="/mawaddi-magic" element={<MawadiMagic />} />
     <Route path="/bestsellers" element={<ProductCategoryPage />} />
@@ -71,7 +55,6 @@ const AppRoutes: React.FC = () => (
         </PayPalWrapper>
       }
     />
-    <Route path="*" element={<Navigate to="/" />} />
   </Routes>
 );
 

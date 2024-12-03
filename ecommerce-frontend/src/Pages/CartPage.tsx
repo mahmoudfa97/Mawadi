@@ -56,7 +56,7 @@ export default function CartPage() {
               <div className="flex-grow">
                 <h3 className="font-medium">{item.name}</h3>
                 <div className="text-sm text-gray-600 mt-1">
-                  Color: {item.colors} | Size: {item.size}
+                  Color: {item.colors} | Size: {item.size  }
                 </div>
                 <div className="flex items-center gap-4 mt-4">
                   <div className="flex items-center gap-2">

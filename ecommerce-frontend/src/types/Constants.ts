@@ -1,10 +1,13 @@
 import { Multer } from "multer";
 
 export interface IProduct {
+  status: unknown;
   id: number;
   name: string;
   brand: string;
   category: string;
+  weight: string;
+  gender: string;
   description: string;
   price: number;
   currency: string;
@@ -12,7 +15,9 @@ export interface IProduct {
   image: string;
   additionalImages: string[];
   colors:string[];
+  discount:string;
   tax:number;
+  tagNumber:string
   size:string[];
   tags: string[];
   occasion: string[];

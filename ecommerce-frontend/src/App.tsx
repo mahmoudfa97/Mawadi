@@ -11,6 +11,7 @@ import AdminLayout from "./components/AdminPanel/AdminLayout";
 import ProductList from "./components/AdminPanel/components/ProductList";
 import AdminDashboard from "./components/AdminPanel/adminDashboard";
 import CreateProduct from "./components/AdminPanel/components/CreateProduct";
+import EditProduct from "./components/AdminPanel/components/EditProduct";
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,16 @@ const App: React.FC = () => {
                 <AdminLayout>
                   {" "}
                   <CreateProduct />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+            <Route
+            path="/admin/products/edit"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  {" "}
                 </AdminLayout>
               </AdminRoute>
             }

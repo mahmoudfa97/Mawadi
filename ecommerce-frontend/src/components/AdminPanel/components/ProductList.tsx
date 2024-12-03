@@ -10,9 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "../../UI/DropdownMenu"
 import { Button } from "../../UI/button"
+import {  Label } from "../../UI/label"
 import { useAppSelector } from '../../../store/hooks'
 import { Modal } from '../../ModalComponent/Modal'
 import CreateProduct from './CreateProduct'
+import EditProduct from './EditProduct'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../UI/Dialog'
+import { Input } from '../../UI/Input'
 
 interface Product {
   id: string
@@ -34,9 +38,32 @@ interface Product {
 export default function ProductList() {
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(1)
-  const { products, whatsNewProducts, specialProducts, popularItems, loading, error  } = useAppSelector((state) => state.products);
+  const { products } = useAppSelector((state) => state.products);
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [viewProduct, setViewProduct] = useState<typeof products[0] | null>(null)
+  const [editProduct, setEditProduct] = useState<typeof products[0] | null>(null)
+  const [removeProduct, setRemoveProduct] = useState<typeof products[0] | null>(null)
+  const [selectedProducts, setSelectedProducts] = useState<number[]>([])
 
+  const handleSelectAll = () => {
+    if (selectedProducts.length === products.length) {
+      setSelectedProducts([])
+    } else {
+      setSelectedProducts(products.map(p => p.id))
+    }
+  }
+
+  const handleSelectProduct = (id: number) => {
+    setSelectedProducts(prev =>
+      prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
+    )
+  }
+
+  const handleRemoveProduct = () => {
+    // Implement remove logic here
+    console.log('Removing product:', removeProduct)
+    setRemoveProduct(null)
+  }
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
   const toggleSelectAll = () => {
@@ -183,15 +210,15 @@ export default function ProductList() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
-                      <button className="p-1 rounded-lg hover:bg-gray-100">
-                        <Eye className="h-5 w-5 text-gray-400" />
-                      </button>
-                      <button className="p-1 rounded-lg hover:bg-gray-100">
-                        <Edit className="h-5 w-5 text-blue-400" />
-                      </button>
-                      <button className="p-1 rounded-lg hover:bg-gray-100">
-                        <Trash2 className="h-5 w-5 text-red-400" />
-                      </button>
+                  <Button variant="ghost" size="icon" onClick={() => setViewProduct(product)}>
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => setEditProduct(product)}>
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => setRemoveProduct(product)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                     </div>
                   </td>
                 </tr>
@@ -236,6 +263,81 @@ export default function ProductList() {
           </div>
         </div>
       </div>
+            {/* View Product Modal */}
+            <Dialog open={!!viewProduct} onOpenChange={() => setViewProduct(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>View Product</DialogTitle>
+          </DialogHeader>
+          {viewProduct && (
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" value={viewProduct.name} className="col-span-3" readOnly />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="category" className="text-right">
+                  Category
+                </Label>
+                <Input id="category" value={viewProduct.category} className="col-span-3" readOnly />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="price" className="text-right">
+                  Price
+                </Label>
+                <Input id="price" value={`$${viewProduct.price}`} className="col-span-3" readOnly />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="stock" className="text-right">
+                  Stock
+                </Label>
+                <Input id="stock" value={`${viewProduct.inStock}`} className="col-span-3" readOnly />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="status" className="text-right">
+                  Status
+                </Label>
+                <Input id="status" value={`${viewProduct.status}`} className="col-span-3" readOnly />
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Product Modal */}
+      <Dialog open={!!editProduct} onOpenChange={() => setEditProduct(null)}>
+        <DialogContent className="max-w-7xl">
+          <DialogHeader>
+            <DialogTitle>Edit Product</DialogTitle>
+          </DialogHeader>
+          {editProduct && <EditProduct initialProduct={editProduct} />}
+        </DialogContent>
+      </Dialog>
+
+      {/* Remove Product Modal */}
+      <Dialog open={!!removeProduct} onOpenChange={() => setRemoveProduct(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Remove Product</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to remove this product? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          {removeProduct && (
+            <div className="py-4">
+              <p><strong>Product:</strong> {removeProduct.name}</p>
+              <p><strong>Category:</strong> {removeProduct.category}</p>
+              <p><strong>Price:</strong> ${removeProduct.price}</p>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRemoveProduct(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleRemoveProduct}>Remove</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <CreateProduct />
       </Modal>

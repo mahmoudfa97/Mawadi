@@ -137,7 +137,7 @@ const ProductCategoryPage: React.FC = () => {
             <p className="text-black font-medium text-xs md:text-sm lg:text-base min-w-fit"> {sortedProducts.length} المنتجات</p>
           </div>
           <div className="bg-[#F8F8F8] rounded-md duration-500 min-w-[2rem] aspect-square ease-in-out flex lg:hidden justify-between shadow-xl box-shadow items-center gap-4 p-2 cursor-pointer">
-            <img src="/assets/images/filter-img.svg" alt="" className="size-4" />
+            <img src="filter-img.svg" alt="" className="size-4" />
           </div>
         </div>
         <div className="overflow-auto scroll-new-style w-full mb-3">
@@ -185,8 +185,8 @@ const ProductCategoryPage: React.FC = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-              {paginatedProducts.map((product) => (
-                <ProductCard product={product} />
+              {paginatedProducts.map((product,idx) => (
+                <ProductCard key={idx} product={product} />
               ))}
             </div>
           </div>
@@ -195,7 +195,7 @@ const ProductCategoryPage: React.FC = () => {
         {/* Top Header for Mobile */}
         <div className="flex justify-between border-b border-[#F6F6F6] items-center pb-4 gap-4 w-full lg:hidden">
           <span className="text-xl font-customBold text-black">تصفية وفرز</span>
-          <img src="/assets/icon/close.svg" alt="Close" className="size-4" />
+          <img src="close.svg" alt="Close" className="size-4" />
         </div>
 
         {/* Accordion Sections */}

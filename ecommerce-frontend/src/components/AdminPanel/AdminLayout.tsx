@@ -46,6 +46,12 @@ interface NavItem {
 
 const navigation: NavItem[] = [
   {
+    section: 'Back To Store',
+    title: 'Store',
+    icon: <Store className="h-5 w-5" />,
+    href: '/'
+  },
+  {
     section: 'GENERAL',
     title: 'Dashboard',
     icon: <BarChart3 className="h-5 w-5" />,
@@ -197,8 +203,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         sidebarOpen ? "w-64" : "w-20"
       )}>
         <div className="sticky top-0 z-10 bg-[#1a1c23] p-4 flex items-center border-b border-gray-800">
-          <div className="text-2xl font-bold">Mawada</div>
-          <img className="mx-auto" width="80px" height="80px" src="/arabic-logo.png" alt="Logo" />
+          <img className="mx-auto" width="80px" height="80px" src={`${window.location.origin.toString()}/arabic-logo.png`} alt="Logo" />
           <button 
             onClick={() => setSidebarOpen(!sidebarOpen)} 
             className="ml-auto text-gray-400 hover:text-white"

@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="product-card aspect-square hover:zoom-animation">
           <Link to={`/products/${product.name}`} state={product}>
             <img
-              src={product.image}
+              src={`${window.location.origin.toString()}/${product.image}`}
               alt={product.name}
               className="aspect-square object-cover w-full rounded-md"
             />

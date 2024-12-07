@@ -119,8 +119,8 @@ const ProductDetailsPage: React.FC = () => {
         <section className="mt-16">
           <h2 className="text-2xl font-bold mb-8">ما يشتريه الناس عادةً</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {relatedProducts.map((relatedProduct: IProduct) => (
-              <ProductCard product={relatedProduct}/>
+            {relatedProducts.map((relatedProduct: IProduct,idx:number) => (
+              <ProductCard key={idx} product={relatedProduct}/>
             ))}
           </div>
         </section>

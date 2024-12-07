@@ -381,7 +381,7 @@ const CheckoutPage: React.FC = () => {
                 />
                 <div className="flex-1">
                   <div className="font-medium">{item.name}</div>
-                  <div className="text-sm text-gray-500">Size: {item.size}</div>
+                  <div className="text-sm text-gray-500">Size: {item.sizes}</div>
                 </div>
                 <div className="text-right">
                   <div>${item.price.toFixed(2)}</div>

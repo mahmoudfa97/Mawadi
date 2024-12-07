@@ -16,58 +16,10 @@ import EditProduct from "./components/AdminPanel/components/EditProduct";
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route
-            path="/admin/products"
-            element={
-              <AdminRoute>
-                <AdminLayout>
-                  {" "}
-                  <ProductList />
-                </AdminLayout>
-              </AdminRoute>
-            }
-          />
-          <Route
-            path="/admin/products/create"
-            element={
-              <AdminRoute>
-                <AdminLayout>
-                  {" "}
-                  <CreateProduct />
-                </AdminLayout>
-              </AdminRoute>
-            }
-          />
-            <Route
-            path="/admin/products/edit"
-            element={
-              <AdminRoute>
-                <AdminLayout>
-                  {" "}
-                </AdminLayout>
-              </AdminRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          ></Route>
-           
-          {/* Catch-all Redirect to Home */}
-        </Routes>
-        <Header />
-        <main className="flex-grow">
-          <AppRoutes />
-        </main>
-        <Footer />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AppRoutes />
+    </Router>
+  </AuthProvider>
   );
 };
 

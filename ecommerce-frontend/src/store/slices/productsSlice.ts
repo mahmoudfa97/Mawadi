@@ -7,7 +7,7 @@ interface ProductsState {
     products: IProduct[];
     specialProducts: IProduct[];
     relatedProducts: IProduct[];
-    whatsNewProducts: IProduct[],
+    whatsNewProducts: IProduct[];
     popularItems: IProduct[];
     loading: boolean;
     error: string | null;
@@ -25,33 +25,40 @@ const initialState: ProductsState = {
     lastUpdated: 0
 };
 
-// Async thunk to fetch products from server
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
-    try {
-        const response = await axios.get('api/products/');  // Replace with your actual API endpoint
-        return response.data;
-    } catch (error) {
-        if (error instanceof Error) {
-            return rejectWithValue(error.message);  // Error message if it's an instance of Error
-        } else {
-            return rejectWithValue('An unknown error occurred');
+export const fetchProducts = createAsyncThunk(
+    'products/fetchProducts', 
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axios.get('api/products/');
+            return response.data;
+        } catch (error) {
+            if (error instanceof Error) {
+                return rejectWithValue(error.message);
+            } else {
+                return rejectWithValue('An unknown error occurred');
+            }
         }
     }
-});
-export const checkForUpdates = createAsyncThunk('products/checkForUpdates', async (_, { getState, dispatch }) => {
-    const state = getState() as { products: ProductsState };
-    const lastUpdated = state.products.lastUpdated;
+);
 
-    try {
-        const response = await axios.get(`api/products/updates?since=${lastUpdated}`);
-        if (response.data.hasUpdates) {
-            dispatch(fetchProducts());
+export const checkForUpdates = createAsyncThunk(
+    'products/checkForUpdates', 
+    async (_, { getState, dispatch }) => {
+        const state = getState() as { products: ProductsState };
+        const lastUpdated = state.products.lastUpdated;
+
+        try {
+            const response = await axios.get(`api/products/updates?since=${lastUpdated}`);
+            if (response.data.hasUpdates) {
+                dispatch(fetchProducts());
+            }
+            return response.data;
+        } catch (error) {
+            console.error('Failed to check for updates:', error);
+            throw error;
         }
-        return response.data;
-    } catch (error) {
-        console.error('Failed to check for updates:', error);
     }
-});
+);
 
 export const productsSlice = createSlice({
     name: 'products',
@@ -69,7 +76,7 @@ export const productsSlice = createSlice({
             }
         },
         getMostSoldProducts: (state) => {
-            state.relatedProducts = state.relatedProducts.sort((a, b) => b.salesCount - a.salesCount);
+            state.relatedProducts = [...state.relatedProducts].sort((a, b) => b.salesCount - a.salesCount);
         },
         getSpecialProducts: (state) => {
             state.specialProducts = state.products?.filter(product => 
@@ -77,16 +84,15 @@ export const productsSlice = createSlice({
                 product.occasion.includes('Anniversary')
             );
         },
-        // New reducer for popular items
         getPopularItems: (state) => {
-            state.popularItems = state.products.sort((a, b) => b.salesCount - a.salesCount).slice(0, 5); // Top 5 most sold items
+            state.popularItems = [...state.products]
+                .sort((a, b) => b.salesCount - a.salesCount)
+                .slice(0, 5);
         },
         getWhatsNewProducts: (state) => {
             const today = new Date();
-            const thirtyDaysAgo = new Date(today);
-            thirtyDaysAgo.setDate(today.getDate() - 30); 
+            const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
         
-         
             if (!state.products || !Array.isArray(state.products)) {
                 console.warn('No products available in state.');
                 state.whatsNewProducts = [];
@@ -99,28 +105,34 @@ export const productsSlice = createSlice({
             });
         },
     },
-    // Handle async actions
     extraReducers: (builder) => {
         builder
-        .addCase(fetchProducts.pending, (state) => {
-            state.loading = true;
-            state.error = null;
-        })
-        .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<IProduct[]>) => {
-            state.products = action.payload;
-            state.loading = false;
-            state.lastUpdated = Date.now();
-        })
-        .addCase(fetchProducts.rejected, (state, action: PayloadAction<any>) => {
-            state.error = action.payload;
-            state.loading = false;
-        })
-        .addCase(PURGE, () => initialState);
-}
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<IProduct[]>) => {
+                state.products = action.payload;
+                state.loading = false;
+                state.lastUpdated = Date.now();
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.error = action.payload as string;
+                state.loading = false;
+            })
+            .addCase(checkForUpdates.rejected, (state, action) => {
+                state.error = 'Failed to check for updates';
+            })
+            .addCase(PURGE, () => initialState);
+    }
 });
 
-// Export the action creators
-export const { getRelatedProducts, getMostSoldProducts, getSpecialProducts, getWhatsNewProducts, getPopularItems } = productsSlice.actions;
+export const { 
+    getRelatedProducts, 
+    getMostSoldProducts, 
+    getSpecialProducts, 
+    getWhatsNewProducts, 
+    getPopularItems 
+} = productsSlice.actions;
 
-// Export the reducer
 export default productsSlice.reducer;

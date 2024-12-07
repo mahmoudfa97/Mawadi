@@ -39,7 +39,7 @@ const AboutUs: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-right">{translations.aboutUs}</h1>
       <div className="flex prose prose-lg max-w-none text-right">
         <div>
-          <img src="/arabic-logo.png" alt="" />
+          <img src={`${window.location.origin.toString()}/arabic-logo.png`} alt="" />
         </div>
         <div>
           <p>{translations.intro}</p>

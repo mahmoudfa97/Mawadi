@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         {/* Logo Section */}
         <div className="hidden lg:block lg:col-span-1">
           <div className="flex flex-col py-3 items-center cursor-pointer">
-            <img src="/arabic-logo.png" alt="Logo" className="h-12" />
+            <img src={`${window.location.origin.toString()}/arabic-logo.png`} alt="Logo" className="h-12" />
             <p className="text-sm text-right">وجهتك الأولى للهدايا الفريدة والمميزة</p>
           </div>
         </div>

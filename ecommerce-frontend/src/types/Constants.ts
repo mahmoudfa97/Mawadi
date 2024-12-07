@@ -18,7 +18,7 @@ export interface IProduct {
   discount:string;
   tax:number;
   tagNumber:string
-  size:string[];
+  sizes:string[];
   tags: string[];
   occasion: string[];
   personalization: {

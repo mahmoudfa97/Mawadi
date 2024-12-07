@@ -181,7 +181,7 @@ export default function ProductList() {
                       <div className="ml-4">
                         <div className="font-medium text-gray-900">{product.name}</div>
                         <div className="text-sm text-gray-500">
-                          Size: {product.size?.join(', ')}
+                          Size: {product.sizes?.join(', ')}
                         </div>
                       </div>
                     </div>

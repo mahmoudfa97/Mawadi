@@ -2,7 +2,7 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../types/User';
-
+import { PURGE } from 'redux-persist';
 interface UserState {
     user: IUser | null
     isLoggedIn: boolean;
@@ -31,6 +31,9 @@ const userSlice = createSlice({
 
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(PURGE, () => initialState);
+    }
 });
 
 export const { login, logout, setUser } = userSlice.actions;

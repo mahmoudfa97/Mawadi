@@ -233,7 +233,7 @@ export default function CreateProduct() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex  grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="brand">Brand</Label>
                   <Input
@@ -281,7 +281,7 @@ export default function CreateProduct() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex  grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="tagNumber">Tag Number</Label>
                   <Input
@@ -309,7 +309,7 @@ export default function CreateProduct() {
           <div className="space-y-6">
             <h2 className="text-lg font-semibold">Pricing Details</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex  grid-cols-1 md:grid-cols-3 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="price">Price</Label>
                 <div className="relative">
@@ -353,5 +353,6 @@ export default function CreateProduct() {
         </div>
       </form>
     </div>
+
   )
 }

@@ -38,14 +38,14 @@ const Footer: React.FC = () => {
           </div>
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedSections['occasions'] ? 'max-h-96' : 'max-h-0'} lg:max-h-96`}>
             <ul className="flex flex-col gap-2 mt-4">
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">أحبك</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">تهانينا</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">خطبة</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">مولود جديد</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">يوم الميلاد</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">أم وعائلة</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">الذكرى السنوية</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">زواج</Link></li>
+              <li><Link to="/productlisting/أحبك" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">أحبك</Link></li>
+              <li><Link to="/productlisting/تهانينا" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">تهانينا</Link></li>
+              <li><Link to="/productlisting/خطبة" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">خطبة</Link></li>
+              <li><Link to="/productlisting/مولود جديد" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">مولود جديد</Link></li>
+              <li><Link to="/productlisting/يوم الميلاد" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">يوم الميلاد</Link></li>
+              <li><Link to="/productlisting/أم وعائلة" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">أم وعائلة</Link></li>
+              <li><Link to="/productlisting/الذكرى السنوية" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">الذكرى السنوية</Link></li>
+              <li><Link to="/productlisting/زواج" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">زواج</Link></li>
             </ul>
             <Link to="/occasions" className="text-xs lg:text-sm font-semibold capitalize pt-4 block hover:underline">
               عرض الكل
@@ -72,10 +72,10 @@ const Footer: React.FC = () => {
           </div>
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedSections['categories'] ? 'max-h-96' : 'max-h-0'} lg:max-h-96`}>
             <ul className="flex flex-col gap-2 mt-4">
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">الاكسسوارات</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">اختيارات مودة</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">البيت</Link></li>
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">زوارة</Link></li>
+              <li><Link to="/الاكسسوارات" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">الاكسسوارات</Link></li>
+              <li><Link to="/اختيارات مودة" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">اختيارات مودة</Link></li>
+              <li><Link to="/البيت" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">البيت</Link></li>
+              <li><Link to="/زوارة" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">زوارة</Link></li>
             </ul>
             <Link to="/categories" className="text-xs lg:text-sm font-semibold capitalize pt-4 block hover:underline">
               عرض الكل
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
           </div>
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedSections['faq'] ? 'max-h-96' : 'max-h-0'} lg:max-h-96`}>
             <ul className="flex flex-col gap-2 mt-4">
-              <li><Link to="/" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">كيف أستطيع أن أرى المناسبات؟</Link></li>
+              <li><Link to="/faq" className="text-[13px] sm:text-sm xl:text-base text-gray-800 hover:underline">كيف أستطيع أن أرى المناسبات؟</Link></li>
             </ul>
             <Link to="/faq" className="text-xs lg:text-sm font-semibold capitalize pt-4 block hover:underline">
               عرض الكل
@@ -142,16 +142,16 @@ const Footer: React.FC = () => {
       <nav className="fixed z-50 inset-x-0 bottom-0 lg:hidden bg-gray-100 rounded-t-2xl">
         <div className="px-3 py-3 flex justify-around items-center">
           <Link to="/" className="block">
-            <img src="/placeholder.svg" alt="Home" className="w-6 h-6" />
+            <img src="" alt="Home" className="w-6 h-6" />
           </Link>
           <Link to="/search" className="block">
-            <img src="/placeholder.svg" alt="Search" className="w-6 h-6" />
+            <img src="" alt="Search" className="w-6 h-6" />
           </Link>
           <Link to="/calendar" className="block">
-            <img src="/placeholder.svg" alt="Calendar" className="w-6 h-6" />
+            <img src="" alt="Calendar" className="w-6 h-6" />
           </Link>
           <Link to="/profile" className="block">
-            <img src="/placeholder.svg" alt="Profile" className="w-6 h-6" />
+            <img src="" alt="Profile" className="w-6 h-6" />
           </Link>
         </div>
       </nav>

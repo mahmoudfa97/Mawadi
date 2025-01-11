@@ -52,7 +52,7 @@ const initialState: IUtils = {
       { name: 'الكيك' },
     ], },
     { name: 'الأنشطة', icon: 'activities.jpeg' },
-    { name: 'هدايا مناسبة', icon: 'lessthan100.jpeg' },
+    { name: 'هدايا مناسبة', icon: 'specificGifts.png' },
     { name: 'D.A.I', icon: ' sss' },
   ]
 }

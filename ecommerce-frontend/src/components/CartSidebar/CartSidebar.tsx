@@ -69,7 +69,7 @@ const CartSideBar: React.FC<CartProps> = ({ isOpen, onClose }) => {
                 <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-lg mr-4" />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{item.name}</h2>
-                  <p className="text-gray-600">{Number(item.price).toFixed(2)} $</p>
+                  <p className="text-gray-600">{Number(item.price).toFixed(2)} ₪</p>
                   <div className="flex items-center mt-2">
                     <button onClick={() => dispatch(decrementQuantity(item.id))} className="bg-gray-200 p-1 rounded-full">
                       <Minus className="h-4 w-4" />

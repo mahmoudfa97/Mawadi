@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 import User, { IUser } from '../models/User.model';
 import { generateToken } from '../utils/jwt';
 import admin from '../firebase';
 import jwt from 'jsonwebtoken';
+import { CustomRequest } from '../middleware/auth';
 export const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password, firstName, lastName, phoneNumber} = req.body;
 
@@ -201,17 +202,22 @@ export const updateUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-export const addToWishlist = async (req: Request, res: Response) => {
+export const addToWishlist = async (req: CustomRequest, res: Response) => {
   try {
     const { productId } = req.body;
-    const user = await User.findById(req.body.user?.id);
+    console.log(req.userId)
+
+   
+    const user = await User.findById(req.userId);
     if (!user) {
-        res.status(404).json({ message: 'User not found' });
-      return
+      res.status(404).json({ message: 'User not found' });
+      return 
     }
 
-    if (!user.wishlist.includes(productId)) {
-      user.wishlist.push(productId);
+    const productObjectId = new mongoose.Types.ObjectId('5f9d88b3e21c2137a4c2c111');
+
+    if (!user.wishlist.includes(productObjectId)) {
+      user.wishlist.push(productObjectId);
       await user.save();
     }
 

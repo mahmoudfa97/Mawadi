@@ -292,7 +292,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 <Settings className="h-5 w-5 text-gray-600" />
               </button>
               <button className="w-8 h-8 rounded-full bg-gray-200">
-                <img src="/placeholder.svg?height=32&width=32" alt="Profile" className="w-full h-full rounded-full" />
+                <img src="" alt="Profile" className="w-full h-full rounded-full" />
               </button>
             </div>
           </div>

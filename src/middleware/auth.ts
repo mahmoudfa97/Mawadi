@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.model';
+import User, { IUser } from '../models/User.model';
 import { auth as firebaseAuth } from 'firebase-admin';
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
   role?: string;
+  userId?: string
 }
 
 export const authenticateUser = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
@@ -17,7 +18,6 @@ export const authenticateUser = async (req: CustomRequest, res: Response, next: 
     }
 
     let userId: string;
-
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
       userId = decoded.id;
@@ -39,6 +39,7 @@ export const authenticateUser = async (req: CustomRequest, res: Response, next: 
     }
 
     req.role = user.role;
+    req.userId = userId;
     next(); // Proceed to the next middleware
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });

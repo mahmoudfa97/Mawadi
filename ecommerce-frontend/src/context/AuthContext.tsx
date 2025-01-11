@@ -13,7 +13,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, password: string) => Promise<void>;
   loginWithPhone: (phoneNumber: string, verifier: RecaptchaVerifier) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
-  logout: () => void;
+  removeUserToken: () => void;
   register: (firstName: string, lastName: string, email: string, password: string, phoneNumber: string) => Promise<void>;
   isLoading: boolean;
 }
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
     } catch (error) {
       console.error('Error fetching user:', error);
-      logout();
+      removeUserToken();
     } finally {
       setIsLoading(false);
     }
@@ -133,14 +133,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const removeUserToken = () => {
     localStorage.removeItem('token');
     setAuthToken(null);
     auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ loadedUser, loginWithEmail, loginWithPhone, verifyPhoneCode, logout, register, isLoading }}>
+    <AuthContext.Provider value={{ loadedUser, loginWithEmail, loginWithPhone, verifyPhoneCode, removeUserToken, register, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

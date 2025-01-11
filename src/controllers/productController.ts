@@ -5,12 +5,32 @@ const productsdumb = [
   {
     "id": 1,
     "name": "Luxury Fragrance Gift Set",
+    "discount": '20',
+
     "brand": "Premium Scents",
     "category": "Fragrances",
     "description": "A premium collection of luxurious perfumes perfect for any occasion.",
     "price": 120.99,
     "tax": 120.99,
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
     "currency": "ILS",
     "image": "luxury_fragrance.jpg",
     "additionalImages": [
@@ -50,7 +70,25 @@ const productsdumb = [
     "description": "An exquisite selection of gourmet treats including chocolates, nuts, and fine wines.",
     "price": 89.99,
     "currency": "ILS",
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "image": "gourmet_hamper.jpg",
     "additionalImages": [
@@ -64,6 +102,8 @@ const productsdumb = [
     "type": "الاكسسوارات",
     "SKU": 70414,
     "inStock": false,
+    "discount": '20',
+
     "productCode": "GFH-002",
     "salesCount": 3,
     "rating": 3,
@@ -83,13 +123,33 @@ const productsdumb = [
   {
     "id": 3,
     "name": "Elegant Diamond Necklace",
+    "discount": '20',
+
     "brand": "Luxe Jewels",
     "category": "التراجي",
     "description": "A stunning diamond necklace to add a touch of elegance to any special moment.",
     "price": 499.99,
     "rating": 3,
     "tax": 120.99,
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "currency": "ILS",
     "image": "diamond_necklace.jpg",
@@ -108,6 +168,7 @@ const productsdumb = [
     "salesCount": 110,
     "dateAdded": "Tue Oct 17 2024 17:06:55 GMT+0300",
     "deliveryTime": "72 hours",
+
     "estimatedDeliveryDate": "Oct 22, 2024",
     "features": [
       "0.5 carat diamond pendant",
@@ -129,7 +190,25 @@ const productsdumb = [
     "rating": 3,
     "currency": "ILS",
     "tax": 120.99,
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "image": "spa_experience.jpg",
     "additionalImages": [
@@ -144,8 +223,10 @@ const productsdumb = [
     "SKU": 70416,
     "inStock": true,
     "productCode": "SRE-004",
+    "discount": '20',
+
     "salesCount": 3,
-    "dateAdded": "Tue Oct 17 2024 17:06:55 GMT+0300",
+    "dateAdded": "Tue Dec 10 2024 17:06:55 GMT+0300",
     "deliveryTime": "Instant E-Voucher",
     "estimatedDeliveryDate": "Immediate",
     "features": [
@@ -164,7 +245,25 @@ const productsdumb = [
     "brand": "Personal Touch",
     "category": "الاكسسوارات",
     "tax": 120.99,
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "description": "A personalized mug with a custom design and a unique video message to show you care.",
     "price": 19.99,
@@ -180,6 +279,8 @@ const productsdumb = [
     "occasion": ["Just Because", "Birthday"],
     "personalization": true,
     "inStock": true,
+    "discount": '20',
+
     "type": "الاكسسوارات",
     "SKU": 70417,
     "productCode": "CMV-005",
@@ -201,6 +302,8 @@ const productsdumb = [
     "id": 6,
     "name": "Handmade Ceramic Vase",
     "brand": "Artisan Creations",
+    "discount": '20',
+
     "category": "البيت",
     "description": "A beautifully crafted ceramic vase with an elegant design, perfect for any room.",
     "price": 45.00,
@@ -214,7 +317,25 @@ const productsdumb = [
     "occasion": ["Housewarming", "Anniversary"],
     "personalization": false,
     "inStock": true,
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "type": "البيت",
     "SKU": 70418,
@@ -237,11 +358,30 @@ const productsdumb = [
     "id": 7,
     "name": "Wireless Earbuds",
     "brand": "SoundWave",
+    "discount": '20',
     "category": "اختيارات مودة",
     "description": "High-quality wireless earbuds with noise-cancellation and long battery life.",
     "price": 79.99,
     "currency": "ILS",
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',  
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "image": "wireless_earbuds.jpg",
     "additionalImages": [
@@ -277,7 +417,25 @@ const productsdumb = [
     "description": "A natural skincare set including cleanser, moisturizer, and serum.",
     "price": 99.99,
     "currency": "ILS",
-    "reviews": 120,
+    "reviews": [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
 
     "image": "skincare_set.jpg",
     "additionalImages": [
@@ -291,6 +449,8 @@ const productsdumb = [
     "type": "الصحة والجمال",
     "SKU": 70420,
     "productCode": "OSS-008",
+    "discount": '20',
+
     "salesCount": 5,
     "rating": 4,
     "deliveryTime": "24 hours",
@@ -309,11 +469,31 @@ const productsdumb = [
     "id": 9,
     "name": "Portable Power Bank",
     "brand": "ChargeTech",
-    "reviews": 120,
+    "reviews":  [
+      {
+        rating: 5, comment: "Excellent!", name: 'ahmed',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr'
+      },
+      { rating: 4, comment: "Good", name: 'belal',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 5, comment: "Loved it", name: 'sultan',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 3, comment: "Okay", name: 'mahmoud',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' },
+      { rating: 4, comment: "Nice", name: 'ayman',
+        dateCommented: '10/12/2024',
+        commentTitle: 'narrr' }
+    ],
+    "numOfReviews": 120,
     "category": "اختيارات مودة",
     "description": "Compact and powerful power bank to charge devices on the go.",
     "price": 29.99,
     "currency": "ILS",
+    "discount": '20',
     "image": "power_bank.jpg",
     "additionalImages": [
       "power_bank_1.jpg",
@@ -348,6 +528,7 @@ const productsdumb = [
     "description": "A high-quality leather-bound travel journal perfect for documenting adventures.",
     "price": 35.99,
     "currency": "ILS",
+    "discount": '20',
     "image": "travel_journal.jpg",
     "additionalImages": [
       "travel_journal_1.jpg",
@@ -378,27 +559,27 @@ const productsdumb = [
 
 
 export const checkForUpdates = async (req: Request, res: Response) => {
-    try {
-      const since = new Date(parseInt(req.query.since as string));
-      if (!since) {
-        res.status(400).json({ error: 'Timestamp is required' });
-        return
+  try {
+    const since = new Date(parseInt(req.query.since as string));
+    if (!since) {
+      res.status(400).json({ error: 'Timestamp is required' });
+      return
     }
-      const updatedProducts: IProduct[] = await Product.find({ lastUpdated: { $gt: since } });
-      if (updatedProducts.length > 0) {
-        res.json({
-            hasUpdates: true,
-            products: updatedProducts,
-        });
+    const updatedProducts: IProduct[] = await Product.find({ lastUpdated: { $gt: since } });
+    if (updatedProducts.length > 0) {
+      res.json({
+        hasUpdates: true,
+        products: updatedProducts,
+      });
     } else {
       res.json({ hasUpdates: false });
-        return
+      return
     }
-    } catch (err) {
-      res.status(500).json({ message: (err as Error).message });
-    }
-  };
-  
+  } catch (err) {
+    res.status(500).json({ message: (err as Error).message });
+  }
+};
+
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find().populate('category');
@@ -436,7 +617,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedProduct) {
       res.status(404).json({ message: 'Product not found' });
-      return 
+      return
     }
     res.status(200).json(updatedProduct);
   } catch (error) {

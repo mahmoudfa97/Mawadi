@@ -8,9 +8,12 @@ import { Button } from '../components/UI/button'
 import { useAppSelector } from '../store/hooks'
 import { CartItem } from "../types/Constants";
 import { useNavigate } from 'react-router-dom'
+import { post } from '../services/api'
+import { IUser } from '../types/User'
 
 export default function CartPage() {
   const cartItemss = useAppSelector((state: { cart: { items: any; }; }) => state.cart.items);
+  const loadedUser: IUser | null = useAppSelector((state) => state.user.user);
   const [cartItems, setCartItems] = useState<CartItem[]>(cartItemss)
   const navigate = useNavigate()
   const updateQuantity = (id: number, increment: boolean) => {
@@ -24,11 +27,17 @@ export default function CartPage() {
   }
 
   const handleMoveToCheckout = () => navigate('/checkout')
+  const handleMoveTobackToStore = () => navigate('/')
     
   const removeItem = (id: number) => {
     setCartItems(items => items.filter(item => item.id !== id))
   }
-
+  const addToWishList = (id: number) => {
+    let wishlist = {
+      productId: id
+    }
+   post(`${window.location.origin}/api/users/wishlist`, wishlist, loadedUser?.role)
+  }
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   const discount = 60.00
   const deliveryCharge = 0.00
@@ -80,7 +89,9 @@ export default function CartPage() {
                   >
                     Remove
                   </button>
-                  <button className="text-sm text-gray-500 hover:text-gray-700">
+                  <button 
+                  onClick={() => addToWishList(item.id)}
+                  className="text-sm text-gray-500 hover:text-gray-700">
                     Add to Wishlist
                   </button>
                 </div>
@@ -89,7 +100,7 @@ export default function CartPage() {
                 <p className="font-medium">{`${item.price?.toFixed(2)}`}</p>
                 <p className="text-sm text-gray-500">{`+${item.tax?.toFixed(2)} Tax`}</p>
                 <p className="text-sm font-medium mt-2">
-                  {`Total: ${((item?.price + item?.tax) * item?.quantity)?.toFixed(2)}`}
+                  {`Total: ₪ ${((item?.price + item?.tax) * item?.quantity)?.toFixed(2)}`}
                 </p>
               </div>
             </div>
@@ -110,28 +121,28 @@ export default function CartPage() {
             
             <div className="flex justify-between text-sm">
               <span>Sub Total:</span>
-              <span>${subtotal?.toFixed(2)}</span>
+              <span>₪{subtotal?.toFixed(2)}</span>
             </div>
             
             <div className="flex justify-between text-sm text-red-600">
               <span>Discount:</span>
-              <span>-${discount?.toFixed(2)}</span>
+              <span>-₪{discount?.toFixed(2)}</span>
             </div>
             
             <div className="flex justify-between text-sm">
               <span>Delivery Charge:</span>
-              <span>${deliveryCharge?.toFixed(2)}</span>
+              <span>₪{deliveryCharge?.toFixed(2)}</span>
             </div>
             
             <div className="flex justify-between text-sm">
               <span>Estimated Tax (15.5%):</span>
-              <span>${estimatedTax?.toFixed(2)}</span>
+              <span>₪{estimatedTax?.toFixed(2)}</span>
             </div>
             
             <div className="border-t pt-4 mt-4">
               <div className="flex justify-between font-medium">
                 <span>Total Amount:</span>
-                <span>${total?.toFixed(2)}</span>
+                <span>₪{total?.toFixed(2)}</span>
               </div>
             </div>
 
@@ -143,7 +154,7 @@ export default function CartPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mt-6">
-              <Button variant="outline">Continue Shopping</Button>
+              <Button variant="outline" onClick={ handleMoveTobackToStore}>Continue Shopping</Button>
               <Button className="bg-green-500 hover:bg-green-600" onClick={ handleMoveToCheckout}>Buy Now</Button>
             </div>
           </div>

@@ -181,7 +181,7 @@ const CheckoutPage: React.FC = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src="/placeholder.svg"
+                    src=""
                     alt="DHL"
                     width={40}
                     height={40}
@@ -192,7 +192,7 @@ const CheckoutPage: React.FC = () => {
                     <div className="text-sm text-gray-500">Delivery - Today</div>
                   </div>
                 </div>
-                <div className="font-medium">$10.00</div>
+                <div className="font-medium">₪10.00</div>
               </Label>
             </div>
 
@@ -204,7 +204,7 @@ const CheckoutPage: React.FC = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src="/placeholder.svg"
+                    src=""
                     alt="FedEx"
                     width={40}
                     height={40}
@@ -215,7 +215,7 @@ const CheckoutPage: React.FC = () => {
                     <div className="text-sm text-gray-500">Delivery - Today</div>
                   </div>
                 </div>
-                <div className="font-medium">$10.00</div>
+                <div className="font-medium">₪10.00</div>
               </Label>
             </div>
 
@@ -227,7 +227,7 @@ const CheckoutPage: React.FC = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src="/placeholder.svg"
+                    src=""
                     alt="UPS"
                     width={40}
                     height={40}
@@ -238,7 +238,7 @@ const CheckoutPage: React.FC = () => {
                     <div className="text-sm text-gray-500">Delivery - Tomorrow</div>
                   </div>
                 </div>
-                <div className="font-medium">$8.00</div>
+                <div className="font-medium">₪8.00</div>
               </Label>
             </div>
 
@@ -257,7 +257,7 @@ const CheckoutPage: React.FC = () => {
                     <div className="text-sm text-gray-500">Delivery - 25 Apr 2024</div>
                   </div>
                 </div>
-                <div className="font-medium">$0.00</div>
+                <div className="font-medium">₪0.00</div>
               </Label>
             </div>
           </RadioGroup>
@@ -279,7 +279,7 @@ const CheckoutPage: React.FC = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src="/placeholder.svg"
+                    src=""
                     alt="PayPal"
                     width={80}
                     height={40}
@@ -302,21 +302,21 @@ const CheckoutPage: React.FC = () => {
                   <div className="font-medium">Credit card</div>
                   <div className="flex gap-2">
                     <img
-                      src="/placeholder.svg"
+                      src=""
                       alt="Mastercard"
                       width={40}
                       height={25}
                       className="rounded"
                     />
                     <img
-                      src="/placeholder.svg"
+                      src=""
                       alt="Visa"
                       width={40}
                       height={25}
                       className="rounded"
                     />
                     <img
-                      src="/placeholder.svg"
+                      src=""
                       alt="American Express"
                       width={40}
                       height={25}
@@ -384,7 +384,7 @@ const CheckoutPage: React.FC = () => {
                   <div className="text-sm text-gray-500">Size: {item.sizes}</div>
                 </div>
                 <div className="text-right">
-                  <div>${item.price.toFixed(2)}</div>
+                  <div>₪{item.price.toFixed(2)}</div>
                   <div className="text-sm text-gray-500">Q: {item.quantity}</div>
                 </div>
               </div>
@@ -393,23 +393,23 @@ const CheckoutPage: React.FC = () => {
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between">
                 <span>Sub Total:</span>
-                <span>$777.00</span>
+                <span>₪777.00</span>
               </div>
               <div className="flex justify-between text-red-600">
                 <span>Discount:</span>
-                <span>-$60.00</span>
+                <span>-₪60.00</span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Charge:</span>
-                <span>$0.00</span>
+                <span>₪0.00</span>
               </div>
               <div className="flex justify-between">
                 <span>Estimated Tax (15.5%):</span>
-                <span>$20.00</span>
+                <span>₪20.00</span>
               </div>
               <div className="border-t pt-2 flex justify-between font-medium">
                 <span>Total Amount</span>
-                <span>$737.00</span>
+                <span>₪737.00</span>
               </div>
             </div>
 

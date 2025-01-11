@@ -1,5 +1,11 @@
 import { Multer } from "multer";
-
+interface Reviews {
+  rating: number;
+  comment: string;
+  name: string;
+  dateCommented: string;
+  commentTitle: string;
+}
 export interface IProduct {
   status: unknown;
   id: number;
@@ -17,6 +23,7 @@ export interface IProduct {
   colors:string[];
   discount:string;
   tax:number;
+  originalPrice: number;
   tagNumber:string
   sizes:string[];
   tags: string[];
@@ -32,8 +39,9 @@ export interface IProduct {
     sold: number;
   }
   productCode: string;
-  reviews: number;
+  reviews: Reviews[];
   salesCount: number;
+  dimensions: string;
   dateAdded: string;
   deliveryTime: string;
   estimatedDeliveryDate: string;

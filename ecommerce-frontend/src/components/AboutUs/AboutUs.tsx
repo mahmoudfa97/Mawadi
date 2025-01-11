@@ -9,7 +9,7 @@ interface Translations {
 }
 const AboutUs: React.FC = () => {
   const [translations, setTranslations] = useState<Translations | null>(null);
-  const [language, setLanguage] = useState('en'); // Default language
+  const [language, setLanguage] = useState('ar'); // Default language
 
   useEffect(() => {
     // Fetch translations from the backend

@@ -164,9 +164,9 @@ const MawadiMagic: React.FC = () => {
 
   const renderGiftOptions = () => {
     const giftOptions = [
-      { name: { en: 'Smart Watch', ar: 'ساعة ذكية' }, price: 199, image: '/placeholder.svg?height=100&width=100' },
-      { name: { en: 'Gourmet Cookbook', ar: 'كتاب طبخ فاخر' }, price: 45, image: '/placeholder.svg?height=100&width=100' },
-      { name: { en: 'Wireless Earbuds', ar: 'سماعات لاسلكية' }, price: 129, image: '/placeholder.svg?height=100&width=100' }
+      { name: { en: 'Smart Watch', ar: 'ساعة ذكية' }, price: 199, image: '' },
+      { name: { en: 'Gourmet Cookbook', ar: 'كتاب طبخ فاخر' }, price: 45, image: '' },
+      { name: { en: 'Wireless Earbuds', ar: 'سماعات لاسلكية' }, price: 129, image: '' }
     ]
 
     return (
@@ -175,7 +175,7 @@ const MawadiMagic: React.FC = () => {
           <Card key={index} className="flex flex-col items-center p-4 bg-white/10 backdrop-blur-md">
             <img src={gift.image} alt={gift.name[language]} className="w-24 h-24 object-cover mb-4 rounded-full" />
             <h3 className="text-lg font-semibold text-white">{gift.name[language]}</h3>
-            <p className="text-sm text-gray-300">${gift.price}</p>
+            <p className="text-sm text-gray-300">₪{gift.price}</p>
           </Card>
         ))}
       </div>

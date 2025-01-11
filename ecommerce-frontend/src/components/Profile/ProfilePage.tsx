@@ -1,13 +1,15 @@
 import { put } from "../../services/api";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { IUser } from "../../types/User";
 import React, { useState } from "react";
 import { Button } from "../UI/button";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../store/slices/userSlice";
 
 const ProfilePage: React.FC = () => {
   const loadedUser: IUser | null = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState<IUser | null>(loadedUser);
 
@@ -49,7 +51,9 @@ const ProfilePage: React.FC = () => {
       console.error('Request failed:', error);
     }
   };
-
+  const logoutUser = () => {
+    dispatch(logout())
+  }
   const handleSave = () => {
     console.log("Saved user data:", user);
     updateUserProfile()
@@ -62,7 +66,7 @@ const ProfilePage: React.FC = () => {
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-6">
             <img
-              src="/placeholder.svg?height=128&width=128"
+              src=""
               alt="Avatar"
               className="h-28 w-28 rounded-full object-cover"
             />
@@ -178,7 +182,7 @@ const ProfilePage: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-gray-600">Date: {new Date().toLocaleDateString()}</p>
-                  <p className="font-semibold">Total: $100.00</p>
+                  <p className="font-semibold">Total: ₪100.00</p>
                 </div>
               </li>
             ))}
@@ -202,12 +206,14 @@ const ProfilePage: React.FC = () => {
 
         {/* Actions */}
         <div className="p-6 border-t border-gray-200 flex justify-end gap-4">
+     
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md"
           >
             {isEditing ? "Cancel" : "Edit Profile"}
           </button>
+
           {isEditing && (
             <button
               onClick={handleSave}
@@ -217,6 +223,12 @@ const ProfilePage: React.FC = () => {
             </button>
           )}
         </div>
+        <button
+            onClick={() => logoutUser()}
+            className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+          >
+            { "Sign Out"}
+          </button>
       </div>
     </div>
   );

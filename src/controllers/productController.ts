@@ -1,3 +1,14 @@
+// productController.ts
+// Purpose: Manages the logic for product-related API endpoints.
+// Main Functionalities:
+// - checkForUpdates: Checks for product updates since a specified timestamp.
+// - getAllProducts: Retrieves all products from the database.
+// - getProductById: Fetches a specific product by its ID.
+// - createProduct: Creates a new product in the database.
+// - updateProduct: Updates an existing product by its ID.
+// - deleteProduct: Deletes a product by its ID.
+// - checkout: Handles the checkout process by calculating the total price of items in the cart.
+
 import { Request, Response } from 'express';
 import Product, { IProduct } from '../models/Product.model';
 

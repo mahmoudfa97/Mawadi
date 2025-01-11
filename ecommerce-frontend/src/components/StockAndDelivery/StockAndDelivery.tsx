@@ -1,3 +1,10 @@
+// StockAndDelivery.tsx
+// Purpose: Renders information about the stock status and delivery options for a product.
+// Main Functionalities:
+// - Displays whether the product is in stock.
+// - Indicates if free delivery is available.
+// - Shows any ongoing sales or discounts.
+
 import React from "react";
 
 const StockAndDelivery: React.FC = () => {

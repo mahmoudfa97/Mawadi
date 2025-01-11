@@ -1,3 +1,9 @@
+// userRoutes.ts
+// Purpose: Sets up the routing for user-related API endpoints.
+// Main Functionalities:
+// - Defines routes for user registration, login, profile management, and wishlist functionalities.
+// - Includes middleware for user authentication and validation.
+
 import express from 'express';
 import * as userController from '../controllers/userController';
 import { authenticateUser } from '../middleware/auth';

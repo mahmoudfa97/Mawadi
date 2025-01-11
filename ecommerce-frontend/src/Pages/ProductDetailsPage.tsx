@@ -18,7 +18,17 @@ import StockAndDelivery from "../components/StockAndDelivery/StockAndDelivery";
 import StaticOffers from "../components/Offers/StaticOffer";
 import ItemDetails from "../components/ItemDetails/ItemDetails";
 
+/** 
+ * ProductDetailsPage.tsx
+ * Purpose: Renders the product details page, allowing users to view product information, images, and reviews.
+ * Main Functionalities:
+ * - Fetches and displays the current product's details, including images, price, and description.
+ * - Allows users to add the product to their cart and adjust quantities.
+ * - Displays related products and user reviews.
+ * - Includes a carousel for viewing additional product images.
+ */
 const ProductDetailsPage: React.FC = () => {
+
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { relatedProducts } = useAppSelector((state) => state.products);

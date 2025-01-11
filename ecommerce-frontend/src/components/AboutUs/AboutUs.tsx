@@ -1,5 +1,12 @@
+// AboutUs.tsx
+// Purpose: Displays the "About Us" section of the application, including the company's mission, team, and introduction.
+// Main Functionalities:
+// - Fetches translations from the backend based on the selected language.
+// - Displays the fetched translations, including the title, introduction, mission, and team information.
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
 interface Translations {
   title: string;
   intro: string;
@@ -7,6 +14,7 @@ interface Translations {
   mission: string;
   aboutUs: string;
 }
+
 const AboutUs: React.FC = () => {
   const [translations, setTranslations] = useState<Translations | null>(null);
   const [language, setLanguage] = useState('ar'); // Default language
@@ -20,7 +28,7 @@ const AboutUs: React.FC = () => {
             'Accept-Language': language, // Specify the language in the headers
           },
         });
-        const data = await response.data
+        const data = await response.data;
         setTranslations(data);
       } catch (error) {
         console.error('Error fetching translations:', error);

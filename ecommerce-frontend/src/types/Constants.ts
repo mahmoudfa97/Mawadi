@@ -29,7 +29,7 @@ export interface IProduct {
   tags: string[];
   occasion: string[];
   personalization: {
-    videoFile: File,
+    videoFile?: File,
     customMessage: string
   };
   type: string;

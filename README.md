@@ -30,12 +30,12 @@ The project is an e-commerce platform that allows users to browse, purchase, and
 
 ## Key Features:
 
-User Registration and Authentication: Users can register, log in, and manage their profiles. The platform supports Firebase authentication for secure access.
-Product Management: Admin users can create, update, and delete products. They can also manage product categories and view sales data.
-Product Browsing: Customers can browse products by categories, view detailed product information, and see related products.
-Shopping Cart and Checkout: Users can add products to their cart, adjust quantities, and proceed to checkout with various payment options.
-Wishlist Functionality: Users can save products to their wishlist for future reference.
-Responsive Design: The platform is designed to be mobile-friendly, ensuring a good user experience across devices.
+1. ***User Registration and Authentication:*** Users can register, log in, and manage their profiles. The platform supports Firebase authentication for secure access.
+2. ***Product Management:*** Admin users can create, update, and delete products. They can also manage product categories and view sales data.
+3. ***Product Browsing:*** Customers can browse products by categories, view detailed product information, and see related products.
+4. ***Shopping Cart and Checkout:*** Users can add products to their cart, adjust quantities, and proceed to checkout with various payment options.
+5. ***Wishlist Functionality:*** Users can save products to their wishlist for future reference.
+6. ***Responsive Design:*** The platform is designed to be mobile-friendly, ensuring a good user experience across devices.
 
 ## Architecture Overview
 

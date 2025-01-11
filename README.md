@@ -24,11 +24,11 @@ please notify us immediately and delete any copies you may have. Unauthorized ac
 this data is strictly prohibited and may be illegal.
 
 
-##NOTE
+## NOTE
 
 The project is an e-commerce platform that allows users to browse, purchase, and manage products online. It features a user-friendly interface for both customers and administrators, enabling seamless interactions and efficient management of products and user accounts.
 
-##Key Features:
+## Key Features:
 
 User Registration and Authentication: Users can register, log in, and manage their profiles. The platform supports Firebase authentication for secure access.
 Product Management: Admin users can create, update, and delete products. They can also manage product categories and view sales data.
@@ -37,7 +37,7 @@ Shopping Cart and Checkout: Users can add products to their cart, adjust quantit
 Wishlist Functionality: Users can save products to their wishlist for future reference.
 Responsive Design: The platform is designed to be mobile-friendly, ensuring a good user experience across devices.
 
-##Architecture Overview
+## Architecture Overview
 
 The project follows a modern web application architecture that separates concerns between the frontend and backend:
 

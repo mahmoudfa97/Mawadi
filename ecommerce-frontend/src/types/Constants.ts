@@ -1,4 +1,3 @@
-import { Multer } from "multer";
 interface Reviews {
   rating: number;
   comment: string;

@@ -1,0 +1,15 @@
+{
+  "buildCommand": "cd ecommerce-frontend && npm install && npm run build",
+  "outputDirectory": "ecommerce-frontend/build",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
+

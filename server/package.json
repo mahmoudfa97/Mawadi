@@ -8,7 +8,7 @@
     "test": "jest",
     "build": "tsc --build",
     "test:watch": "jest --watch",
-    "start": "node app.ts",
+    "start": "ts-node ./app.ts",
     "dev": "nodemon ./app.ts",
     "prepublishOnly": "npm run build"
   },

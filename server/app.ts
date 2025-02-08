@@ -58,8 +58,14 @@ mongoose.connect(process.env.MONGO_URL as string)
 app.use(errorHandler);
 app.use(languageHandler);
 
-app.listen(PORT, () => {
-  logger.info(`Server running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  // Only listen on a specific port in non-production environments
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+} else {
+  // In production (Vercel), we don't need to specify a port
+  console.log('Server is ready for Vercel deployment');
+}
 
 export default app;

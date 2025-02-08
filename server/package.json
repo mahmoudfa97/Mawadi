@@ -6,7 +6,7 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "test": "jest",
-    "build": "tsc --build --clean",
+    "build": "tsc --build",
     "test:watch": "jest --watch",
     "start": "node app.ts",
     "dev": "nodemon ./app.ts",

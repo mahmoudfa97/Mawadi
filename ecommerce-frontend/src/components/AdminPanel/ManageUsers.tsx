@@ -5,13 +5,13 @@ const ManageUsers: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get('/admin/users')
+    axios.get(process.env.REACT_APP_API_URL+'/admin/users')
       .then(response => setUsers(response.data))
       .catch(error => console.error(error));
   }, []);
 
   const toggleBlockUser = (userId: string) => {
-    axios.patch(`/admin/users/${userId}/block`)
+    axios.patch(process.env.REACT_APP_API_URL+`/admin/users/${userId}/block`)
       .then(() => {
         setUsers(users.map(user => user._id === userId ? { ...user, isBlocked: !user.isBlocked } : user));
       })

@@ -8,7 +8,7 @@ const ProfilePage: React.FC = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/auth/profile', {
+        const response = await axios.get(process.env.REACT_APP_API_URL+'/auth/profile', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOrders(response.data.orders);

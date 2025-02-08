@@ -5,13 +5,13 @@ const ManageOrders: React.FC = () => {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get('/admin/orders')
+    axios.get(process.env.REACT_APP_API_URL+'/admin/orders')
       .then(response => setOrders(response.data))
       .catch(error => console.error(error));
   }, []);
 
   const updateOrderStatus = (orderId: string, status: string) => {
-    axios.patch(`/admin/orders/${orderId}`, { status })
+    axios.patch(process.env.REACT_APP_API_URL+`/admin/orders/${orderId}`, { status })
       .then(() => {
         setOrders(orders.map(order => order._id === orderId ? { ...order, status } : order));
       })

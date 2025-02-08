@@ -8,7 +8,7 @@ interface EmailData {
 
 export const sendEmail = async (data: EmailData): Promise<void> => {
   try {
-    const response = await axios.post('/api/services/send-email', data);
+    const response = await axios.post(process.env.REACT_APP_API_URL+'/api/services/send-email', data);
     if (response.status !== 200) {
       throw new Error('Failed to send email');
     }

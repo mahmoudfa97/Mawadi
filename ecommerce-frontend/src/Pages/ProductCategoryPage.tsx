@@ -11,11 +11,24 @@ import { Select,SelectContent, SelectItem, SelectTrigger, SelectValue } from "..
 import { Button } from "../components/UI/button";
 import { Checkbox } from "../components/UI/checkbox";
 
-const ProductCategoryPage: React.FC = () => {
+interface IProductCategoryPageProps {
+  activeBestSellers?: boolean;
+}
+
+const ProductCategoryPage: React.FC<IProductCategoryPageProps> = ({ activeBestSellers = false }) => {
   const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { products, loading, error } = useAppSelector((state) => state.products);
+  const { products, loading, error } = useAppSelector((state) => {
+    if (activeBestSellers) {
+      return {
+        products: state.products.mostSoldProducts,
+        loading: state.products.loading,
+        error: state.products.error,
+      };
+    }
+    return state.products;
+  });
   const [activeCategory, setActiveCategory] = useState(category || "الجميع");
   const [sortBy, setSortBy] = useState("ترتيب حسب");
   const [currentPage, setCurrentPage] = useState(1);
@@ -159,8 +172,8 @@ const ProductCategoryPage: React.FC = () => {
       </div>
 
       {/* Category Navigation */}
-      <div className="overflow-x-auto mb-6">
-        <div className="flex space-x-2 rtl:space-x-reverse">
+      <div className="flex overflow-hidden mb-6">
+        <div className="flex-wrap  space-x-2 rtl:space-x-reverse">
           {categories.map((category) => (
             <Button
               key={category}

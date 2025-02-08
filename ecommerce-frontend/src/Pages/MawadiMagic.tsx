@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Loader2, Star, Globe } from 'lucide-react'
 import { RadioGroup, RadioGroupItem } from '../components/UI/radio-group'
 import { Label } from '../components/UI/label'
@@ -8,14 +8,29 @@ import { Slider } from '../components/UI/slider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/UI/select'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/UI/card'
 import { Button } from '../components/UI/button'
+import { IProduct } from '../types/Constants'
+import { useAppSelector } from '../store/hooks'
 
-type ResponseType = {
-  occasion: string;
-  personality: string;
-  budget: number;
-  preferences: string;
+const WEIGHTS = {
+  OCCASION_MATCH: 0.35,
+  PRICE_MATCH: 0.25,
+  PERSONALITY_MATCH: 0.25,
+  PREFERENCE_MATCH: 0.15
 }
 
+const PERSONALITY_MAPPINGS = {
+  Adventurous: ['outdoor', 'sports', 'travel', 'gadgets'],
+  Sophisticated: ['luxury', 'accessories', 'fashion', 'home decor'],
+  Sentimental: ['personalized', 'handmade', 'photos', 'keepsakes'],
+  Creative: ['art', 'crafts', 'DIY', 'books']
+}
+
+interface ResponseType {
+  occasion: string
+  personality: string
+  budget: number
+  preferences: string
+}
 type QuestionType = {
   id: keyof ResponseType;
   question: {
@@ -38,6 +53,9 @@ const MawadiMagic: React.FC = () => {
   const [step, setStep] = useState(0)
   const [loading, setLoading] = useState(false)
   const [language, setLanguage] = useState<LanguageType>('en')
+  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>([])
+  const { products } = useAppSelector((state) => state.products)
+
   const [responses, setResponses] = useState<ResponseType>({
     occasion: '',
     personality: '',
@@ -95,18 +113,62 @@ const MawadiMagic: React.FC = () => {
     }
   ]
 
+  const calculateProductScore = useCallback((product: IProduct, userResponses: ResponseType): number => {
+    let score = 0
+    // Occasion match
+    const occasionMatch = product.occasion.some(occ => 
+      occ.toLowerCase() === userResponses.occasion.toLowerCase()
+    )
+    score += occasionMatch ? WEIGHTS.OCCASION_MATCH : 0
+    // Price match (using a bell curve distribution)
+    const priceMatch = Math.max(0, 1 - Math.abs(product.price - userResponses.budget) / userResponses.budget)
+    score += priceMatch * WEIGHTS.PRICE_MATCH
+    // Personality match
+    const personalityTags = PERSONALITY_MAPPINGS[userResponses.personality as keyof typeof PERSONALITY_MAPPINGS] || []
+    const personalityMatch = product.tags.some(tag => 
+      personalityTags.includes(tag.toLowerCase())
+    )
+    score += personalityMatch ? WEIGHTS.PERSONALITY_MATCH : 0
+    // Preference match
+    const preferenceMatch = product.category.toLowerCase() === userResponses.preferences.toLowerCase()
+    score += preferenceMatch ? WEIGHTS.PREFERENCE_MATCH : 0
+    return score
+  }, [])
+
+  const findRecommendedProducts = useCallback((userResponses: ResponseType) => {
+    const scoredProducts = products.map(product => ({
+      product,
+      score: calculateProductScore(product, userResponses)
+    }))
+
+    const topProducts = scoredProducts
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6)
+      .map(item => item.product)
+
+    return topProducts
+  }, [products, calculateProductScore])
+
   const handleAnswer = (id: keyof ResponseType, value: string | number) => {
     setResponses(prev => ({ ...prev, [id]: value }))
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if(step == questions.length){
+      setStep(0)
+
+    }
     if (step < questions.length - 1) {
       setStep(prev => prev + 1)
-    } else {
+    } 
+    else {
       setLoading(true)
-      setTimeout(() => {
-        setLoading(false)
-      }, 3000)
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      const recommendations = findRecommendedProducts(responses)
+      setRecommendedProducts(recommendations)
+      setLoading(false)
+      setStep(prev => prev + 1)
     }
   }
 
@@ -115,8 +177,9 @@ const MawadiMagic: React.FC = () => {
   }
 
   const renderQuestion = () => {
-    const { id, question, type, options, min, max, step: sliderStep } = questions[step]
-    return (
+      if (!questions[step]) return null;
+      const { id, question, type, options, min, max, step: sliderStep } = questions[step];
+      return (
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-white">{question[language]}</h2>
         {type === 'radio' && options && (
@@ -135,7 +198,7 @@ const MawadiMagic: React.FC = () => {
               min={min}
               max={max}
               step={sliderStep}
-              value={[responses[id] as number]}
+              value={[responses[id] as number || 50]}
               onValueChange={(value) => handleAnswer(id, value[0])}
               className="w-full"
             />
@@ -145,7 +208,7 @@ const MawadiMagic: React.FC = () => {
           </div>
         )}
         {type === 'select' && options && (
-          <Select onValueChange={(value) => handleAnswer(id, value)} value={`${responses[id]}`}>
+          <Select onValueChange={(value) => handleAnswer(id, value)} value={responses[id] ? `${responses[id]}` : undefined}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder={language === 'en' ? "Select an option" : "اختر خيارًا"} />
             </SelectTrigger>
@@ -163,19 +226,25 @@ const MawadiMagic: React.FC = () => {
   }
 
   const renderGiftOptions = () => {
-    const giftOptions = [
-      { name: { en: 'Smart Watch', ar: 'ساعة ذكية' }, price: 199, image: '' },
-      { name: { en: 'Gourmet Cookbook', ar: 'كتاب طبخ فاخر' }, price: 45, image: '' },
-      { name: { en: 'Wireless Earbuds', ar: 'سماعات لاسلكية' }, price: 129, image: '' }
-    ]
-
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {giftOptions.map((gift, index) => (
+        {recommendedProducts.map((product, index) => (
           <Card key={index} className="flex flex-col items-center p-4 bg-white/10 backdrop-blur-md">
-            <img src={gift.image} alt={gift.name[language]} className="w-24 h-24 object-cover mb-4 rounded-full" />
-            <h3 className="text-lg font-semibold text-white">{gift.name[language]}</h3>
-            <p className="text-sm text-gray-300">₪{gift.price}</p>
+            <img 
+              src={product.image || "/placeholder.svg"} 
+              alt={product.name} 
+              className="w-24 h-24 object-cover mb-4 rounded-full"
+            />
+            <h3 className="text-lg font-semibold text-white">{product.name}</h3>
+            <p className="text-sm text-gray-300">{product.price} {product.currency}</p>
+            <div className="flex items-center mt-2">
+              {[...Array(5)].map((_, i) => (
+                <Star 
+                  key={i}
+                  className={`h-4 w-4 ${i < product.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`}
+                />
+              ))}
+            </div>
           </Card>
         ))}
       </div>
@@ -242,7 +311,7 @@ const MawadiMagic: React.FC = () => {
               </p>
             </div>
           )}
-          {!loading && step > questions.length && (
+          {!loading && step >= questions.length && (
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-center">
                 {language === 'en' 

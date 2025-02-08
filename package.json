@@ -7,10 +7,12 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --build --clean",
-    "start": "nodemon ./app.ts"
+    "test:watch": "jest --watch",
+    "start": "nodemon ./app.ts",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["react", "components", "ui", "typescript"],
+  "author": "Mahmoud Faour",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.7",
@@ -55,5 +57,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.2"
-  }
+  },
+  "files": ["dist"]
 }

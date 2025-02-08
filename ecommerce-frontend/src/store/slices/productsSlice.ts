@@ -6,6 +6,7 @@ import { IProduct } from '../../types/Constants';
 interface ProductsState {
     products: IProduct[];
     specialProducts: IProduct[];
+    mostSoldProducts: IProduct[];
     relatedProducts: IProduct[];
     whatsNewProducts: IProduct[];
     popularItems: IProduct[];
@@ -17,6 +18,7 @@ interface ProductsState {
 const initialState: ProductsState = {
     products: [],
     specialProducts: [],
+    mostSoldProducts: [],
     relatedProducts: [],
     whatsNewProducts: [],
     popularItems: [],
@@ -75,8 +77,9 @@ export const productsSlice = createSlice({
                 );
             }
         },
-        getMostSoldProducts: (state) => {
-            state.relatedProducts = [...state.relatedProducts].sort((a, b) => b.salesCount - a.salesCount);
+        getMostSoldProducts: (state: ProductsState) => {
+            const sortedProducts = state.products.slice().sort((a, b) => b.salesCount - a.salesCount);
+            state.mostSoldProducts = sortedProducts.slice(0, 4);
         },
         getSpecialProducts: (state) => {
             state.specialProducts = state.products?.filter(product => 

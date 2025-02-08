@@ -55,9 +55,9 @@ const AppRoutes: React.FC = () => (
       <Route path="register" element={<RegisterPage />} />
       <Route path="categories" element={<CategoriesPage />} />
       <Route path="mawaddi-magic" element={<MawadiMagic />} />
-      <Route path="bestsellers" element={<ProductCategoryPage />} />
+      <Route path="bestsellers" element={<ProductCategoryPage activeBestSellers={true}/>} />
       <Route path="occasions" element={<OccasionsPage />} />
-      <Route path="productlisting/:name" element={<ProductCategoryPage />} />
+      <Route path="productlisting/:category" element={<ProductCategoryPage />} />
       <Route path="products/:name" element={<ProductDetailsPage />} />
       <Route path="cart" element={<CartPage />} />
       <Route

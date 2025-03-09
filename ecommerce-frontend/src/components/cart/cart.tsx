@@ -16,7 +16,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, clearCart }) => {
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
 
   const handleCheckout = () => {
-    axios.post(process.env.REACT_APP_API_URL+'/products/checkout', { cartItems })
+    axios.post(process.env.REACT_APP_API_URL+'products/checkout', { cartItems })
       .then(response => {
         alert(`Checkout successful! Total: $${response.data.total}`);
         clearCart();

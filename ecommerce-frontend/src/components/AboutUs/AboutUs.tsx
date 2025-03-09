@@ -23,7 +23,7 @@ const AboutUs: React.FC = () => {
     // Fetch translations from the backend
     const fetchTranslations = async () => {
       try {
-        const response = await axios.get(process.env.REACT_APP_API_URL+`/api/translate/aboutus`, {
+        const response = await axios.get(process.env.REACT_APP_API_URL+`translate/aboutus`, {
           headers: {
             'Accept-Language': language, // Specify the language in the headers
           },

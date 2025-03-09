@@ -31,7 +31,7 @@ export const fetchProducts = createAsyncThunk(
     'products/fetchProducts', 
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(process.env.REACT_APP_API_URL+'api/products/');
+            const response = await axios.get(process.env.REACT_APP_API_URL+'products/');
             return response.data;
         } catch (error) {
             if (error instanceof Error) {
@@ -50,7 +50,7 @@ export const checkForUpdates = createAsyncThunk(
         const lastUpdated = state.products.lastUpdated;
 
         try {
-            const response = await axios.get(process.env.REACT_APP_API_URL+`api/products/updates?since=${lastUpdated}`);
+            const response = await axios.get(process.env.REACT_APP_API_URL+`products/updates?since=${lastUpdated}`);
             if (response.data.hasUpdates) {
                 dispatch(fetchProducts());
             }

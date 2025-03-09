@@ -159,188 +159,190 @@ const ProductCategoryPage: React.FC<IProductCategoryPageProps> = ({ activeBestSe
         </div>
       </div>
       <div className="container mx-auto px-4 py-6">
-      {/* Mobile Header */}
-      <div className="flex justify-between items-center lg:hidden mb-4">
-        <h1 className="text-xl font-semibold">الأكثر مبيعاً / 20 المنتجات</h1>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setIsMobileFilterOpen(true)}
-        >
-          <Filter className="h-4 w-4" />
-        </Button>
-      </div>
-
-      {/* Category Navigation */}
-      <div className="flex overflow-hidden mb-6">
-        <div className="flex-wrap  space-x-2 rtl:space-x-reverse">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant="outline"
-              className="whitespace-nowrap"
-              onClick={() => handleCategoryChange(category)}
-            >
-              {category}
-            </Button>
-          ))}
+        {/* Mobile Header */}
+        <div className="flex justify-between items-center lg:hidden mb-4">
+          <h1 className="text-xl font-semibold">الأكثر مبيعاً / 20 المنتجات</h1>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setIsMobileFilterOpen(true)}
+          >
+            <Filter className="h-4 w-4" />
+          </Button>
         </div>
-      </div>
 
-      <div className="lg:grid lg:grid-cols-4 gap-6">
-        {/* Filters Sidebar */}
-        <aside className={`
-          fixed inset-y-0 right-0 w-80 bg-white shadow-lg lg:shadow-none
-          transform transition-transform duration-200 ease-in-out
-          lg:relative lg:transform-none lg:w-auto
-          ${isMobileFilterOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
-          z-40 lg:z-0
-        `}>
-          {/* Mobile Filter Header */}
-          <div className="lg:hidden flex justify-between items-center p-4 border-b">
-            <h2 className="font-semibold">الفلترة والترتيب</h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileFilterOpen(false)}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+        {/* Category Navigation */}
+        <div className="flex overflow-hidden mb-6">
+          <div className="flex-wrap  space-x-2 rtl:space-x-reverse">
+          <h1 className="text-xl font-semibold">الأكثر مبيعاً / 20 المنتجات</h1>
 
-          <div className="p-4 space-y-6">
-            {/* Sort Section */}
-            <div>
-              <div 
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('sort')}
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant="outline"
+                className="whitespace-nowrap"
+                onClick={() => handleCategoryChange(category)}
               >
-                <h3 className="font-semibold">ترتيب حسب</h3>
-                <ChevronDown className="h-4 w-4" />
-              </div>
-              {expandedSections.includes('sort') && (
-                <div className="mt-2 space-y-2">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="اختر الترتيب" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="newest">الأحدث</SelectItem>
-                      <SelectItem value="price-asc">السعر: من الأقل إلى الأعلى</SelectItem>
-                      <SelectItem value="price-desc">السعر: من الأعلى إلى الأقل</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            </div>
-
-            {/* Categories Section */}
-            <div>
-              <div 
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('categories')}
-              >
-                <h3 className="font-semibold">الأقسام</h3>
-                <ChevronDown className="h-4 w-4" />
-              </div>
-              {expandedSections.includes('categories') && (
-                <div className="mt-2 space-y-2">
-                  {categories.map((category) => (
-                    <label key={category} className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <Checkbox
-                        checked={activeFilters.includes(category)}
-                        onCheckedChange={() => toggleFilter(category)}
-                      />
-                      <span className="text-sm">{category}</span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Age Groups Section */}
-            <div>
-              <div 
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('ageGroups')}
-              >
-                <h3 className="font-semibold">الفئات العمرية</h3>
-                <ChevronDown className="h-4 w-4" />
-              </div>
-              {expandedSections.includes('ageGroups') && (
-                <div className="mt-2 space-y-2">
-                  {['0-2 سنوات', '3-5 سنوات', '6-8 سنوات', '9-11 سنوات'].map((age) => (
-                    <label key={age} className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <Checkbox
-                        checked={activeFilters.includes(age)}
-                        onCheckedChange={() => toggleFilter(age)}
-                      />
-                      <span className="text-sm">{age}</span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Gender Section */}
-            <div>
-              <div 
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('gender')}
-              >
-                <h3 className="font-semibold">الجنس</h3>
-                <ChevronDown className="h-4 w-4" />
-              </div>
-              {expandedSections.includes('gender') && (
-                <div className="mt-2 space-y-2">
-                  {['رجال', 'نساء', 'أطفال'].map((gender) => (
-                    <label key={gender} className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <Checkbox
-                        checked={activeFilters.includes(gender)}
-                        onCheckedChange={() => toggleFilter(gender)}
-                      />
-                      <span className="text-sm">{gender}</span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Brands Section */}
-            <div>
-              <div 
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('brands')}
-              >
-                <h3 className="font-semibold">العلامات التجارية</h3>
-                <ChevronDown className="h-4 w-4" />
-              </div>
-              {expandedSections.includes('brands') && (
-                <div className="mt-2 space-y-2">
-                  {['Brand 1', 'Brand 2', 'Brand 3'].map((brand) => (
-                    <label key={brand} className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <Checkbox
-                        checked={activeFilters.includes(brand)}
-                        onCheckedChange={() => toggleFilter(brand)}
-                      />
-                      <span className="text-sm">{brand}</span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </aside>
-
-        {/* Products Grid */}
-        <div className="lg:col-span-3">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {paginatedProducts.map((product,idx) => (
-                <ProductCard key={idx} product={product} />
-              ))}
+                {category}
+              </Button>
+            ))}
           </div>
         </div>
-      </div>
+
+        <div className="lg:grid lg:grid-cols-4 gap-6">
+          {/* Filters Sidebar */}
+          <aside className={`
+            fixed inset-y-0 right-0 w-80 bg-white shadow-lg lg:shadow-none
+            transform transition-transform duration-200 ease-in-out
+            lg:relative lg:transform-none lg:w-auto
+            ${isMobileFilterOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
+            z-40 lg:z-0
+          `}>
+            {/* Mobile Filter Header */}
+            <div className="lg:hidden flex justify-between items-center p-4 border-b">
+              <h2 className="font-semibold">الفلترة والترتيب</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMobileFilterOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="p-4 space-y-6">
+              {/* Sort Section */}
+              <div>
+                <div 
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleSection('sort')}
+                >
+                  <h3 className="font-semibold">ترتيب حسب</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+                {expandedSections.includes('sort') && (
+                  <div className="mt-2 space-y-2">
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="اختر الترتيب" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">الأحدث</SelectItem>
+                        <SelectItem value="price-asc">السعر: من الأقل إلى الأعلى</SelectItem>
+                        <SelectItem value="price-desc">السعر: من الأعلى إلى الأقل</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+
+              {/* Categories Section */}
+              <div>
+                <div 
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleSection('categories')}
+                >
+                  <h3 className="font-semibold">الأقسام</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+                {expandedSections.includes('categories') && (
+                  <div className="mt-2 space-y-2">
+                    {categories.map((category) => (
+                      <label key={category} className="flex items-center space-x-2 rtl:space-x-reverse">
+                        <Checkbox
+                          checked={activeFilters.includes(category)}
+                          onCheckedChange={() => toggleFilter(category)}
+                        />
+                        <span className="text-sm">{category}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Age Groups Section */}
+              <div>
+                <div 
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleSection('ageGroups')}
+                >
+                  <h3 className="font-semibold">الفئات العمرية</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+                {expandedSections.includes('ageGroups') && (
+                  <div className="mt-2 space-y-2">
+                    {['0-2 سنوات', '3-5 سنوات', '6-8 سنوات', '9-11 سنوات'].map((age) => (
+                      <label key={age} className="flex items-center space-x-2 rtl:space-x-reverse">
+                        <Checkbox
+                          checked={activeFilters.includes(age)}
+                          onCheckedChange={() => toggleFilter(age)}
+                        />
+                        <span className="text-sm">{age}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Gender Section */}
+              <div>
+                <div 
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleSection('gender')}
+                >
+                  <h3 className="font-semibold">الجنس</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+                {expandedSections.includes('gender') && (
+                  <div className="mt-2 space-y-2">
+                    {['رجال', 'نساء', 'أطفال'].map((gender) => (
+                      <label key={gender} className="flex items-center space-x-2 rtl:space-x-reverse">
+                        <Checkbox
+                          checked={activeFilters.includes(gender)}
+                          onCheckedChange={() => toggleFilter(gender)}
+                        />
+                        <span className="text-sm">{gender}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Brands Section */}
+              <div>
+                <div 
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleSection('brands')}
+                >
+                  <h3 className="font-semibold">العلامات التجارية</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+                {expandedSections.includes('brands') && (
+                  <div className="mt-2 space-y-2">
+                    {['Brand 1', 'Brand 2', 'Brand 3'].map((brand) => (
+                      <label key={brand} className="flex items-center space-x-2 rtl:space-x-reverse">
+                        <Checkbox
+                          checked={activeFilters.includes(brand)}
+                          onCheckedChange={() => toggleFilter(brand)}
+                        />
+                        <span className="text-sm">{brand}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </aside>
+
+          {/* Products Grid */}
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {paginatedProducts.map((product,idx) => (
+                  <ProductCard key={idx} product={product} />
+                ))}
+            </div>
+          </div>
+        </div>
     </div>
     </section>
   );
